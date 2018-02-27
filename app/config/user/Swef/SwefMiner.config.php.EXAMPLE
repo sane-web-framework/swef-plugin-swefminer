@@ -1,0 +1,6 @@
+<?php
+
+// Configurable constants
+define ( 'swefminer_uri_browse',             '/swefminer'                           );
+
+?>
