@@ -4,6 +4,9 @@ $options        = array (
     ''          => 'SwefMiner options:'
    ,'inspect'   => 'Inspect plugin properties'
 );
+foreach ($this->tables as $table) {
+    $options[$table[swefminer_col_table]] = '['.$table[swefminer_col_set].'] '.$table[swefminer_col_title];
+}
 $option         = $this->page->_GET (SWEF_GET_OPTION);
 if (!array_key_exists($option,$options)) {
     $option     = SWEF_STR__EMPTY;
@@ -20,12 +23,30 @@ if (!array_key_exists($option,$options)) {
   </form>
 
 <?php if($option=='inspect'): ?>
+
   <pre>
 <?php print_r ($this->properties); ?>
 
   </pre>
 <?php endif; ?>
 
+<?php if(array_key_exists($option,$this->tables)): ?>
+
+<pre><?php print_r ($this->select($this->columnsDisplay($option))); ?></pre>
+
+<pre>JOINS: <?php print_r ($this->joins); ?></pre>
+
+<?php endif; ?>
 
 </div>
+
+                $joins      = array ();
+                $order_by   = array ();
+                foreach ($c[swefminer_col_indexes] AS $idx) {
+                    array_push ($order_by,$idx[swefminer_col_table].SWEF_STR__DOT.$idx[swefminer_col_column]);
+                    $join   = $idx[swefminer_col_table].SWEF_STR__DOT.$idx[swefminer_col_column];
+                    $join  .= SWEF_STR__EQUALS;
+                    $join  .= $idx[swefminer_col_table].SWEF_STR__DOT.$idx[swefminer_col_column];
+                    array_push ($joins,$join);
+                }
 
