@@ -10,11 +10,12 @@ class SwefMiner extends \Swef\Bespoke\Plugin {
 */
 
     public  $browse;
-    public  $columns    = array ();
-    public  $joins      = array ();
-    public  $rows       = array ();
-    public  $sets       = array ();
-    public  $tables     = array ();
+    public  $columns                = array ();
+    public  $dbs                    = array ();
+    public  $joins                  = array ();
+    public  $rows                   = array ();
+    public  $supportedPDODrivers    = array ();
+    public  $tables                 = array ();
 
 
 /*
@@ -24,6 +25,7 @@ class SwefMiner extends \Swef\Bespoke\Plugin {
     public function __construct ($page) {
         // Always construct the base class - PHP does not do this implicitly
         parent::__construct ($page,'\Swef\SwefMiner');
+        $this->supportedPDODrivers = explode (SWEF_STR__COMMA,swefminer_supported_pdo_drivers);
     }
 
     public function __destruct ( ) {
@@ -38,8 +40,7 @@ class SwefMiner extends \Swef\Bespoke\Plugin {
 
 
     public function _dashboard ( ) {
-        $this->columnsLoad ();
-        $this->dbsLoad ();
+        $this->_init ();
         require_once swefminer_file_dash;
     }
 
@@ -87,43 +88,70 @@ class SwefMiner extends \Swef\Bespoke\Plugin {
         return SWEF_BOOL_TRUE;
     }
 
-    public function dbsLoad ( ) {
-        if (!count($this->sets)) {
-            $this->notify ('No sets were found so no databases required');
-            return SWEF_BOOL_FALSE;
-        }
-        $constants = get_defined_constants (SWEF_BOOL_TRUE) [swefminer_col_user];
-        foreach ($constants as $c=>$v) {
+    public function _init ( ) {
+        $constants                         = get_defined_constants (SWEF_BOOL_TRUE) [swefminer_col_user];
+        $meta                              = $this->page->swef->db->dbCall (swefminer_call_tables);
+        foreach ($constants as $c=>$dsn) {
             if (strpos($c,swefminer_db_const_pfx_dsn)!==SWEF_INT_0) {
                 continue;
             }
-            $set = substr ($c,strlen(swefminer_db_const_pfx_dsn));
-            if (!array_key_exists($set,$this->sets)) {
-                $this->notify ('Data set "'.$set.'" not found in SwefMiner tables');
+            $dbn = substr ($c,strlen(swefminer_db_const_pfx_dsn));
+            if (!defined(swefminer_db_const_pfx_usr.$dbn)) {
+                $this->notify ('Database "'.$dbn.'" has no database user - define '.swefminer_db_const_pfx_usr.$dbn);
                 continue;
             }
-            if ($v==null) {
-                $this->sets[$set][swefminer_col_dsn] = null;
-                $this->sets[$set][swefminer_col_usr] = null;
-                $this->sets[$set][swefminer_col_pwd] = null;
+            if (!defined(swefminer_db_const_pfx_pwd.$dbn)) {
+                $this->notify ('Database "'.$dbn.'" has no database password - define '.swefminer_db_const_pfx_pwd.$dbn);
                 continue;
             }
-            if (!defined(swefminer_db_const_pfx_usr.$set)) {
-                $this->notify ('Data set "'.$set.'" has no database user constant '.swefminer_db_const_pfx_usr.$set);
-                continue;
+            $db = new \Swef\Bespoke\Database (
+                $dsn
+               ,constant (swefminer_db_const_pfx_usr.$dbn)
+               ,constant (swefminer_db_const_pfx_pwd.$dbn)
+            );
+            $this->dbs[$dbn]                = $db;
+            $this->tables[$dbn]             = $this->tablesScan ($dbn);
+            foreach ($meta as $m) {
+?><pre>$m = <?php print_r ($m); ?></pre><?php
+                if ($m[swefminer_col_database]!=$dbn) {
+?><pre>    Wrong database</pre><?php
+                    continue;
+                }
+                foreach ($this->tables[$dbn] as $t) {
+                    if ($t[swefminer_col_model_table]!=$table[swefminer_col_table]) {
+?><pre>    Wrong table</pre><?php
+                        continue;
+                    }
+                    foreach ($table as $f=>$v) {
+?><pre>$f = <?php print_r ($f); ?>, $v = <?php print_r ($v); ?></pre><?php
+                        $this->tables[$dbn][$f]     = $v;
+                    }
+                    break;
+                }
             }
-            if (!defined(swefminer_db_const_pfx_pwd.$set)) {
-                $this->notify ('Data set "'.$set.'" has no database password constant '.swefminer_db_const_pfx_pwd.$set);
-                continue;
-            }
-            $this->sets[$set][swefminer_col_dsn] = $v;
-            $this->sets[$set][swefminer_col_usr] = constant (swefminer_db_const_pfx_usr.$set);
-            $this->sets[$set][swefminer_col_pwd] = constant (swefminer_db_const_pfx_pwd.$set);
         }
+?><pre>$this->tables = <?php print_r ($this->tables); ?></pre><?php
+    }
+
+    public function tablesScan ($dbname) {
+        $mod                                = SWEF_BOOL_FALSE;
+        if (defined(swefminer_db_const_pfx_mod.$dbname) && constant(swefminer_db_const_pfx_mod.$dbname)) {
+            $mod                            = SWEF_BOOL_TRUE;
+        }
+        $tag                                = SWEF_STR__EMPTY;
+        if (defined(swefminer_db_const_pfx_tag.$dbname)) {
+            $tag                            = constant (swefminer_db_const_pfx_tag.$dbname);
+        }
+        if (!$tag) {
+            $tag                            = $dbname;
+        }
+        $tables                             = $this->dbs[$dbname]->dbCall (swefminer_call_model_tables,$dbname);
+        $this->page->diagnosticAdd ('Database "'.$dbname.'": '.$this->dbs[$dbname]->dbCallLast());
+        return $tables;
     }
 
     public function columnsChildren ($column) {
-        $cs       = array ();
+        $cs                     = array ();
         foreach ($this->columns as $c) {
             if ($c[swefminer_col_set]!=$column[swefminer_col_set]) {
                 continue;
@@ -236,6 +264,24 @@ class SwefMiner extends \Swef\Bespoke\Plugin {
         $select .= swefminer_str_from.SWEF_STR__CRLF;
         $select .= swefminer_str_indent.SWEF_STR__SPACE.$table.SWEF_STR__CRLF;
         return $select;
+    }
+
+    public function modelScan ( ) {
+        if (!preg_match(swefminer_preg_table,$table)) {
+            $this->notify ('Table name is not allowed - see swefminer_preg_table');
+            return SWEF_BOOL_FALSE;
+        }
+        if (!in_array($this->db->dbPDOAttribute(PDO::ATTR_DRIVER_NAME),$this->supportedPDODrivers)) {
+            $this->notify ('SwefMiner::describe() does not currently support this PDO driver');
+            return SWEF_BOOL_FALSE;
+        }
+        if ($this->db->dbPDOAttribute(PDO::ATTR_DRIVER_NAME)==swefminer_pdo_driver_mysql) {
+            // MySQL / MariaDB specific table information
+            $q          = 'SHOW CREATE TABLE `'.$table.'`';
+            $describe   = $this->db->dbQuery ($q);
+            return $describe[SWEF_INT_0][SWEF_INT_1];
+        }
+        return SWEF_BOOL_FALSE;
     }
 
 }

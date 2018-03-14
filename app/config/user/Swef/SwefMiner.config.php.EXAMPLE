@@ -3,19 +3,11 @@
 // User interaction
 define ( 'swefminer_uri_browse',            '/mine'                                                         );
 
-// Database for set=swefminer (in Swef database)
-define ( 'swefminer_db_dsn_swefminer',      null                                                            );
-
-// ---------------------------------------------------------------------------------
-// Add your data sets to table swefminer_set and define corresponding constants here
-// ---------------------------------------------------------------------------------
-
-// Database for set=example1 (in the Swef database)
-//define ( 'swefminer_db_dsn_example1',       null                                                            );
-
-// Database for set=myset1 (in an alternative database)
-//define ( 'swefminer_db_dsn_myset2',         'mysql:host=localhost;dbname=bab_temp;port=3306;charset=utf8'   );
-//define ( 'swefminer_db_usr_myset2',         'root'                                                          );
-//define ( 'swefminer_db_pwd_myset2',         ''                                                              );
+// Database called "example"
+//define ( 'swefminer_db_dsn_example',      'mysql:host=localhost;dbname=my_db;port=3306;charset=utf8'      );
+//define ( 'swefminer_db_usr_example',      'my_usr'                                                        );
+//define ( 'swefminer_db_pwd_example',      'my_pwd'                                                        );
+//define ( 'swefminer_db_mod_example',      true                                                            );
+//define ( 'swefminer_db_tag_example',      'My Example Database'                                           );
 
 ?>

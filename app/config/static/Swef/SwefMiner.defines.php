@@ -11,11 +11,16 @@ define ( 'swefminer_file_dash',              SWEF_DIR_PLUGIN.'/Swef/SwefMiner.da
 
 
 // Stored procedures
+define ( 'swefminer_call_model_columns',     'swefMinerModelColumns'                                );
+define ( 'swefminer_call_model_referers',    'swefMinerModelReferers'                               );
+define ( 'swefminer_call_model_tables',      'swefMinerModelTables'                                 );
 define ( 'swefminer_call_columns',           'swefMinerColumns'                                     );
+define ( 'swefminer_call_tables',            'swefMinerTables'                                      );
 
 
 // Standard columns
 define ( 'swefminer_col_column',             'column'                                               );
+define ( 'swefminer_col_database',           'database'                                             );
 define ( 'swefminer_col_describes_record',   'describes_record'                                     );
 define ( 'swefminer_col_description',        'description'                                          );
 define ( 'swefminer_col_dsn',                'dsn'                                                  );
@@ -27,12 +32,13 @@ define ( 'swefminer_col_is_index',           'is_index'                         
 define ( 'swefminer_col_is_self',            'is_self'                                              );
 define ( 'swefminer_col_is_uuid',            'is_uuid'                                              );
 define ( 'swefminer_col_is_parent',          'is_parent'                                            );
+define ( 'swefminer_col_mod',                'may_modify'                                           );
+define ( 'swefminer_col_model_table',        'TABLE_NAME'                                           );
 define ( 'swefminer_col_parent_column',      'parent_column'                                        );
 define ( 'swefminer_col_parent_table',       'parent_table'                                         );
 define ( 'swefminer_col_pwd',                'pwd'                                                  );
-define ( 'swefminer_col_read_only',          'read_only'                                            );
-define ( 'swefminer_col_set',                'set'                                                  );
 define ( 'swefminer_col_table',              'table'                                                );
+define ( 'swefminer_col_tag',                'db_tagline'                                           );
 define ( 'swefminer_col_title',              'title'                                                );
 define ( 'swefminer_col_user',               'user'                                                 );
 define ( 'swefminer_col_usr',                'usr'                                                  );
@@ -44,10 +50,16 @@ define ( 'swefminer_columns_lookup',         'swefminer-columns'                
 define ( 'swefminer_db_const_pfx_dsn',       'swefminer_db_dsn_'                                    );
 define ( 'swefminer_db_const_pfx_usr',       'swefminer_db_usr_'                                    );
 define ( 'swefminer_db_const_pfx_pwd',       'swefminer_db_pwd_'                                    );
+define ( 'swefminer_db_const_pfx_mod',       'swefminer_db_mod_'                                    );
+define ( 'swefminer_db_const_pfx_tag',       'swefminer_db_tag_'                                    );
 define ( 'swefminer_concat_separator',       ';;'                                                   );
+define ( 'swefminer_pdo_support',            '<^[A-z0-9_]+$>'                                       );
+define ( 'swefminer_preg_table',             '<^[A-z0-9_]+$>'                                       );
 define ( 'swefminer_str_indent',             '   '                                                  );
 define ( 'swefminer_str_select',             'SELECT'                                               );
 define ( 'swefminer_str_from',               'FROM'                                                 );
 define ( 'swefminer_str_left_join',          'LEFT JOIN'                                            );
+define ( 'swefminer_supported_pdo_drivers',  'mysql'                                                );
+define ( 'swefminer_pdo_driver_mysql',       'mysql'                                                );
 
 ?>
