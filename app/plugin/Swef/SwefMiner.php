@@ -45,11 +45,9 @@ class SwefMiner extends \Swef\Bespoke\Plugin {
     }
 
     public function _info ( ) {
-        $info   = __FILE__.SWEF_STR__CRLF;
-        $info  .= SWEF_COL_CONTEXT.SWEF_STR__EQUALS;
-        $info  .= $this->page->swef->context[SWEF_COL_CONTEXT];
-        return $info;
+        require_once swefminer_file_info;
     }
+
 
 /*
     SUPPORTING METHODS
