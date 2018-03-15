@@ -37,27 +37,63 @@ else {
 
   <form id="swefminer-form-table" method="post" action="">
 
-    <table>
+    <table class="fill">
 <?php   foreach($tables as $table): ?>
 
       <tbody class="list">
       <tr>
 <?php if(array_key_exists(swefminer_col_table,$table)): ?>
 
-        <td class="table-details"><details><summary>Remove</summary></details></td>
-        <td><?php echo htmlentities ($table[swefminer_col_table_schema]); ?>.<?php echo htmlentities ($table[swefminer_col_table_name]); ?></td>
-        <td><strong><?php echo htmlentities ($table[swefminer_col_title]); ?></strong></td>
-        <td class="table-details"><details><summary>Columns</summary></details></td>
-        <td><em><?php echo htmlentities ($table[swefminer_col_description]); ?></em></td>
-        <td class="tooltip">?<pre class="tooltip"><?php echo htmlentities (print_r($table,SWEF_BOOL_TRUE)); ?></pre></td>
+        <td>
+          <details class="tooltip">
+            <summary>Remove</summary>
+            <div class="tooltip tooltip-top-left">
+              <p>Remove <?php echo htmlentities ($table[swefminer_col_table_name]); ?> from model:</p>
+              <p><a href="">Remove</a></p>
+            </div>
+          </details>
+        </td>
+        <td>
+          <strong><?php echo htmlentities ($table[swefminer_col_table_schema]); ?>.<?php echo htmlentities ($table[swefminer_col_table_name]); ?></strong>
+        </td>
+        <td>
+          <strong><a href=""><?php echo htmlentities ($table[swefminer_col_title]); ?></a></strong>
+        </td>
+        <td>
+          <em><?php echo htmlentities ($table[swefminer_col_description]); ?></em>
+        </td>
+        <td>
+        <details class="tooltip">
+          <summary>?</summary>
+          <pre class="tooltip tooltip-top-right"><?php echo htmlentities (print_r($table,SWEF_BOOL_TRUE)); ?></pre>
+        </details>
+        </td>
 <?php else: ?>
 
-        <td class="table-details"><details><summary>Add</summary></details></td>
-        <td><?php echo htmlentities ($table[swefminer_col_table_schema]); ?>.<?php echo htmlentities ($table[swefminer_col_table_name]); ?></td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td class="tooltip">?<pre class="tooltip"><?php echo htmlentities (print_r($table,SWEF_BOOL_TRUE)); ?></pre></td>
+        <td>
+          <details class="tooltip">
+            <summary>Add</summary>
+            <div class="tooltip tooltip-top-left">
+              <p>Add this table to model:</p>
+              <p><a href="">Add</a></p>
+            </div>
+          </details>
+        </td>
+        <td>
+          <?php echo htmlentities ($table[swefminer_col_table_schema]); ?>.<?php echo htmlentities ($table[swefminer_col_table_name]); ?>
+        </td>
+        <td>
+          &nbsp;
+        </td>
+        <td>
+          &nbsp;
+        </td>
+        <td>
+          <details class="tooltip">
+            <summary>?</summary>
+            <pre class="tooltip tooltip-top-right"><?php echo htmlentities (print_r($table,SWEF_BOOL_TRUE)); ?></pre>
+          </details>
+        </td>
 <?php endif; ?>
 
       </tr>
