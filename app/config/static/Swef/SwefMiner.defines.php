@@ -33,7 +33,9 @@ define ( 'swefminer_col_is_self',            'is_self'                          
 define ( 'swefminer_col_is_uuid',            'is_uuid'                                              );
 define ( 'swefminer_col_is_parent',          'is_parent'                                            );
 define ( 'swefminer_col_mod',                'may_modify'                                           );
-define ( 'swefminer_col_model_table',        'TABLE_NAME'                                           );
+define ( 'swefminer_col_primary_key',        'PRIMARY_KEY'                                          );
+define ( 'swefminer_col_table_schema',       'TABLE_SCHEMA'                                         );
+define ( 'swefminer_col_table_name',         'TABLE_NAME'                                           );
 define ( 'swefminer_col_parent_column',      'parent_column'                                        );
 define ( 'swefminer_col_parent_table',       'parent_table'                                         );
 define ( 'swefminer_col_pwd',                'pwd'                                                  );

@@ -2,7 +2,11 @@
 DELIMITER $$
 
 DROP PROCEDURE IF EXISTS `swefMinerModelColumns` $$
-CREATE PROCEDURE `swefMinerModelColumns` (IN `db` VARCHAR(64) CHARSET utf8, IN `tn` VARCHAR(64) CHARSET utf8)  BEGIN
+CREATE PROCEDURE `swefMinerModelColumns` (
+      IN `dbn` VARCHAR(64) CHARSET utf8
+     ,IN `tbn` VARCHAR(64) CHARSET utf8
+)
+BEGIN
   SELECT  `information_schema`.`COLUMNS`.*
          ,`information_schema`.`KEY_COLUMN_USAGE`.`REFERENCED_TABLE_SCHEMA`
          ,`information_schema`.`KEY_COLUMN_USAGE`.`REFERENCED_TABLE_NAME`
@@ -12,14 +16,18 @@ CREATE PROCEDURE `swefMinerModelColumns` (IN `db` VARCHAR(64) CHARSET utf8, IN `
       USING (
       	`TABLE_CATALOG`,`TABLE_SCHEMA`,`TABLE_NAME`,`COLUMN_NAME`
       )
-  WHERE   `information_schema`.`COLUMNS`.`TABLE_SCHEMA`=db
-    AND   `information_schema`.`COLUMNS`.`TABLE_NAME`=tn
+  WHERE   `information_schema`.`COLUMNS`.`TABLE_SCHEMA`=dbn
+    AND   `information_schema`.`COLUMNS`.`TABLE_NAME`=tbn
   ORDER BY `information_schema`.`COLUMNS`.`ORDINAL_POSITION`
   ;
 END$$
 
 DROP PROCEDURE IF EXISTS `swefMinerModelReferers` $$
-CREATE PROCEDURE `swefMinerModelReferers` (IN `db` VARCHAR(64) CHARSET utf8, IN `tn` VARCHAR(64) CHARSET utf8)  BEGIN
+CREATE PROCEDURE `swefMinerModelReferers` (
+      IN `dbn` VARCHAR(64) CHARSET utf8
+     ,IN `tbn` VARCHAR(64) CHARSET utf8
+)
+BEGIN
   SELECT    `information_schema`.`COLUMNS`.*
            ,`information_schema`.`KEY_COLUMN_USAGE`.`REFERENCED_TABLE_SCHEMA`
            ,`information_schema`.`KEY_COLUMN_USAGE`.`REFERENCED_TABLE_NAME`
@@ -29,14 +37,17 @@ CREATE PROCEDURE `swefMinerModelReferers` (IN `db` VARCHAR(64) CHARSET utf8, IN 
       USING (
       	`TABLE_CATALOG`,`TABLE_SCHEMA`,`TABLE_NAME`,`COLUMN_NAME`
       )
-  WHERE     `information_schema`.`KEY_COLUMN_USAGE`.`REFERENCED_TABLE_SCHEMA`=db
-    AND     `information_schema`.`KEY_COLUMN_USAGE`.`REFERENCED_TABLE_NAME`=tn
+  WHERE     `information_schema`.`KEY_COLUMN_USAGE`.`REFERENCED_TABLE_SCHEMA`=dbn
+    AND     `information_schema`.`KEY_COLUMN_USAGE`.`REFERENCED_TABLE_NAME`=tbn
   ORDER BY  `information_schema`.`COLUMNS`.`ORDINAL_POSITION`
   ;
 END$$
 
 DROP PROCEDURE IF EXISTS `swefMinerModelTables` $$
-CREATE PROCEDURE `swefMinerModelTables` (IN `db` VARCHAR(64) CHARSET utf8)  BEGIN
+CREATE PROCEDURE `swefMinerModelTables` (
+      IN `dbn` VARCHAR(64) CHARSET utf8
+)
+BEGIN
   SELECT    `information_schema`.`TABLES`.*
            ,GROUP_CONCAT(
                 `information_schema`.`COLUMNS`.`COLUMN_NAME`
@@ -47,7 +58,7 @@ CREATE PROCEDURE `swefMinerModelTables` (IN `db` VARCHAR(64) CHARSET utf8)  BEGI
         USING (
             `TABLE_CATALOG`,`TABLE_SCHEMA`,`TABLE_NAME`
         )
-  WHERE     `information_schema`.`COLUMNS`.`TABLE_SCHEMA`=db
+  WHERE     `information_schema`.`COLUMNS`.`TABLE_SCHEMA`=dbn
     AND     `information_schema`.`COLUMNS`.`COLUMN_KEY`='PRI'
   GROUP BY  `information_schema`.`COLUMNS`.`TABLE_NAME`
   ORDER BY  `information_schema`.`COLUMNS`.`TABLE_NAME`

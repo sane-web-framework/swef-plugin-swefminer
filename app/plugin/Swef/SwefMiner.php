@@ -104,33 +104,27 @@ class SwefMiner extends \Swef\Bespoke\Plugin {
                 $this->notify ('Database "'.$dbn.'" has no database password - define '.swefminer_db_const_pfx_pwd.$dbn);
                 continue;
             }
-            $db = new \Swef\Bespoke\Database (
+            $this->dbs[$dbn] = new \Swef\Bespoke\Database (
                 $dsn
                ,constant (swefminer_db_const_pfx_usr.$dbn)
                ,constant (swefminer_db_const_pfx_pwd.$dbn)
             );
-            $this->dbs[$dbn]                = $db;
             $this->tables[$dbn]             = $this->tablesScan ($dbn);
-            foreach ($meta as $m) {
-?><pre>$m = <?php print_r ($m); ?></pre><?php
-                if ($m[swefminer_col_database]!=$dbn) {
-?><pre>    Wrong database</pre><?php
-                    continue;
-                }
-                foreach ($this->tables[$dbn] as $t) {
-                    if ($t[swefminer_col_model_table]!=$table[swefminer_col_table]) {
-?><pre>    Wrong table</pre><?php
+            foreach ($this->tables[$dbn] as $i=>$t) {
+                foreach ($meta as $m) {
+                    if ($m[swefminer_col_database]!=$dbn) {
                         continue;
                     }
-                    foreach ($table as $f=>$v) {
-?><pre>$f = <?php print_r ($f); ?>, $v = <?php print_r ($v); ?></pre><?php
-                        $this->tables[$dbn][$f]     = $v;
+                    if ($m[swefminer_col_table]!=$t[swefminer_col_table_name]) {
+                        continue;
+                    }
+                    foreach ($m as $f=>$v) {
+                        $this->tables[$dbn][$i][$f] = $v;
                     }
                     break;
                 }
             }
         }
-?><pre>$this->tables = <?php print_r ($this->tables); ?></pre><?php
     }
 
     public function tablesScan ($dbname) {

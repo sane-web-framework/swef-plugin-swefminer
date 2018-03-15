@@ -1,15 +1,25 @@
 <?php
 
-$options        = array (
-    ''          => 'SwefMiner options:'
-   ,'inspect'   => 'Inspect plugin properties'
+$options            = array (
+    ''              => 'SwefMiner options:'
+   ,'inspect'       => 'Inspect plugin properties'
 );
-$option         = $this->page->_GET (SWEF_GET_OPTION);
-if (!array_key_exists($option,$options)) {
-    $option     = SWEF_STR__EMPTY;
+foreach ($this->tables as $dbn=>$ts) {
+    $options[$dbn]  = $dbn;
 }
-
+$option             = $this->page->_GET (SWEF_GET_OPTION);
+if (!array_key_exists($option,$options)) {
+    $option         = SWEF_STR__EMPTY;
+}
+if (array_key_exists($option,$this->tables)) {
+    $dbn            = $option;
+    $tables         = $this->tables[$dbn];
+}
+else {
+    $tables         = array ();
+}
 ?>
+
 <div id="swefminer-dash" class="plugin plugin-dash">
 
   <h2>Dashboard for SwefMiner</h2>
@@ -21,28 +31,44 @@ if (!array_key_exists($option,$options)) {
 
 <?php if($option=='inspect'): ?>
 
-  <pre>
-<?php     print_r ($this->properties); ?>
+  <pre><?php print_r ($this->properties); ?></pre>
 
-  </pre>
+<?php else: ?>
+
+  <form id="swefminer-form-table" method="post" action="">
+
+    <table>
+<?php   foreach($tables as $table): ?>
+
+      <tbody class="list">
+      <tr>
+<?php if(array_key_exists(swefminer_col_table,$table)): ?>
+
+        <td class="table-details"><details><summary>Remove</summary></details></td>
+        <td><?php echo htmlentities ($table[swefminer_col_table_schema]); ?>.<?php echo htmlentities ($table[swefminer_col_table_name]); ?></td>
+        <td><strong><?php echo htmlentities ($table[swefminer_col_title]); ?></strong></td>
+        <td class="table-details"><details><summary>Columns</summary></details></td>
+        <td><em><?php echo htmlentities ($table[swefminer_col_description]); ?></em></td>
+        <td class="tooltip">?<pre class="tooltip"><?php echo htmlentities (print_r($table,SWEF_BOOL_TRUE)); ?></pre></td>
+<?php else: ?>
+
+        <td class="table-details"><details><summary>Add</summary></details></td>
+        <td><?php echo htmlentities ($table[swefminer_col_table_schema]); ?>.<?php echo htmlentities ($table[swefminer_col_table_name]); ?></td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td class="tooltip">?<pre class="tooltip"><?php echo htmlentities (print_r($table,SWEF_BOOL_TRUE)); ?></pre></td>
+<?php endif; ?>
+
+      </tr>
+<?php   endforeach; ?>
+
+      </tbody>
+    </table>
+
+  </form>
+
 <?php endif; ?>
 
 </div>
-<!--
 
-if (array_key_exists($option,$this->tables)) {
-    print_r ($this->select($this->columnsDisplay($option)));
-    print_r ($this->joins);
-}
-
-
-                $joins      = array ();
-                $order_by   = array ();
-                foreach ($c[swefminer_col_indexes] AS $idx) {
-                    array_push ($order_by,$idx[swefminer_col_table].SWEF_STR__DOT.$idx[swefminer_col_column]);
-                    $join   = $idx[swefminer_col_table].SWEF_STR__DOT.$idx[swefminer_col_column];
-                    $join  .= SWEF_STR__EQUALS;
-                    $join  .= $idx[swefminer_col_table].SWEF_STR__DOT.$idx[swefminer_col_column];
-                    array_push ($joins,$join);
-                }
--->
