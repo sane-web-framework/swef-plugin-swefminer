@@ -3,7 +3,20 @@
 
 // Data navigation
 define ( 'swefminer_limit_rows',             50                                                     );
+
+
+// Form field names
+define ( 'swefminer_form_database',          'swefminer-database'                                   );
+define ( 'swefminer_form_description',       'swefminer-description'                                );
 define ( 'swefminer_form_posted',            'swefminer-posted'                                     );
+define ( 'swefminer_form_remove',            'swefminer-remove'                                     );
+define ( 'swefminer_form_table',             'swefminer-table'                                      );
+define ( 'swefminer_form_title',             'swefminer-title'                                      );
+define ( 'swefminer_form_inserter_pfx',      'swefminer-inserter-'                                  );
+define ( 'swefminer_form_deleter_pfx',       'swefminer-deleter-'                                   );
+define ( 'swefminer_form_updater_pfx',       'swefminer-updater-'                                   );
+define ( 'swefminer_form_selector_pfx',      'swefminer-selector-'                                  );
+define ( 'swefminer_form_update',            'swefminer-update'                                     );
 
 
 // Files
@@ -16,18 +29,26 @@ define ( 'swefminer_call_model_columns',     'swefMinerModelColumns'            
 define ( 'swefminer_call_model_referers',    'swefMinerModelReferers'                               );
 define ( 'swefminer_call_model_tables',      'swefMinerModelTables'                                 );
 define ( 'swefminer_call_columns',           'swefMinerColumns'                                     );
+define ( 'swefminer_call_table_create',      'swefMinerTableCreate'                                 );
+define ( 'swefminer_call_table_remove',      'swefMinerTableRemove'                                 );
+define ( 'swefminer_call_table_unremove',    'swefMinerTableUnremove'                               );
+define ( 'swefminer_call_table_update',      'swefMinerTableUpdate'                                 );
 define ( 'swefminer_call_tables',            'swefMinerTables'                                      );
 
 
 // Standard columns
 define ( 'swefminer_col_column',             'column'                                               );
+define ( 'swefminer_col_column_name',        'COLUMN_NAME'                                          );
 define ( 'swefminer_col_database',           'database'                                             );
+define ( 'swefminer_col_deleters',           'deleters'                                             );
 define ( 'swefminer_col_describes_record',   'describes_record'                                     );
 define ( 'swefminer_col_description',        'description'                                          );
 define ( 'swefminer_col_dsn',                'dsn'                                                  );
 define ( 'swefminer_col_heading',            'heading'                                              );
 define ( 'swefminer_col_hint',               'hint'                                                 );
+define ( 'swefminer_col_ignore',             'ignore'                                               );
 define ( 'swefminer_col_indexes',            'indexes'                                              );
+define ( 'swefminer_col_inserters',          'inserters'                                            );
 define ( 'swefminer_col_is_child',           'is_child'                                             );
 define ( 'swefminer_col_is_index',           'is_index'                                             );
 define ( 'swefminer_col_is_self',            'is_self'                                              );
@@ -40,9 +61,11 @@ define ( 'swefminer_col_table_name',         'TABLE_NAME'                       
 define ( 'swefminer_col_parent_column',      'parent_column'                                        );
 define ( 'swefminer_col_parent_table',       'parent_table'                                         );
 define ( 'swefminer_col_pwd',                'pwd'                                                  );
+define ( 'swefminer_col_selectors',          'selectors'                                            );
 define ( 'swefminer_col_table',              'table'                                                );
 define ( 'swefminer_col_tag',                'db_tagline'                                           );
 define ( 'swefminer_col_title',              'title'                                                );
+define ( 'swefminer_col_updaters',           'updaters'                                             );
 define ( 'swefminer_col_user',               'user'                                                 );
 define ( 'swefminer_col_usr',                'usr'                                                  );
 

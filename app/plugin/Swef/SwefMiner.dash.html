@@ -5,7 +5,7 @@ $options            = array (
    ,'inspect'       => 'Inspect plugin properties'
 );
 foreach ($this->tables as $dbn=>$ts) {
-    $options[$dbn]  = $dbn;
+    $options[$dbn]  = 'DB = '.$dbn;
 }
 $option             = $this->page->_GET (SWEF_GET_OPTION);
 if (!array_key_exists($option,$options)) {
@@ -35,74 +35,140 @@ else {
 
 <?php else: ?>
 
-  <form id="swefminer-form-table" method="post" action="">
-
     <table class="fill">
-<?php   foreach($tables as $table): ?>
-
       <tbody class="list">
-      <tr>
-<?php if(array_key_exists(swefminer_col_table,$table)): ?>
-
-        <td>
-          <details class="tooltip">
-            <summary>Remove</summary>
-            <div class="tooltip tooltip-top-left">
-              <p>Remove <?php echo htmlentities ($table[swefminer_col_table_name]); ?> from model:</p>
-              <p><a href="">Remove</a></p>
-            </div>
-          </details>
-        </td>
-        <td>
-          <strong><?php echo htmlentities ($table[swefminer_col_table_schema]); ?>.<?php echo htmlentities ($table[swefminer_col_table_name]); ?></strong>
-        </td>
-        <td>
-          <strong><a href=""><?php echo htmlentities ($table[swefminer_col_title]); ?></a></strong>
+<?php   foreach($tables as $table): ?>
+<?php     if(array_key_exists(swefminer_col_ignore,$table) && !$table[swefminer_col_ignore]): ?>
+        <tr>
+          <td>
+            <details>
+              <summary>Edit</summary>
+              <form class="dashboard-layer dashboard-layer-1 list" method="post" action="<?php echo htmlentities($_SERVER['REQUEST_URI']); ?>">
+                <div id="swefminer-model-columns" class="dashboard-layer dashboard-half-right">
+                  <pre><?php print_r($this->columns); ?></pre>
+                </div>
+                <div class="input">
+                  <label for="">&nbsp;</label>
+                  <button onclick="this.parentElement.parentElement.parentElement.removeAttribute('open');return false"><t en>Close</t></button>
+                </div>
+                <div class="input">
+                  <label for=""><t en>Table name:</t></label>
+                  <span><?php echo htmlentities ($table[swefminer_col_database]); ?>.<strong><?php echo htmlentities ($table[swefminer_col_table]); ?></strong></span>
+                </div>
+                <div class="input">
+                  <label for=""><t en>Table title:</t></label>
+                  <input class="wide" type="text" name="<?php echo swefminer_form_title; ?>" value="<?php echo htmlentities ($table[swefminer_col_title]); ?>" />
+                </div>
+                <div class="input">
+                  <label for=""><t en>Table description:</t></label>
+                  <textarea class="wide" name="<?php echo swefminer_form_description; ?>"><?php echo htmlentities ($table[swefminer_col_description]); ?></textarea>
+                </div>
+                <div class="input">
+                  <label for=""><t en>Inserters</t>:</label>
+                </div>
+<?php       foreach($this->page->swef->usergroups as $ug): ?>
+                <div class="input">
+                  <label for="">&nbsp;</label>
+<?php         if(in_array($ug[SWEF_COL_USERGROUP],$table[swefminer_col_inserters])): ?>
+                  <input type="checkbox" name="<?php echo swefminer_form_inserter_pfx.htmlentities($ug[SWEF_COL_USERGROUP]); ?>" checked="checked" />
+<?php         else: ?>
+                  <input type="checkbox" name="<?php echo swefminer_form_inserter_pfx.htmlentities($ug[SWEF_COL_USERGROUP]); ?>" />
+<?php         endif; ?>
+                  <label for=""><?php echo htmlentities ($ug[SWEF_COL_USERGROUP_NAME]); ?></label>
+                </div>
+<?php       endforeach; ?>
+                <div class="input">
+                  <label for=""><t en>Deleters</t>:</label>
+                </div>
+<?php       foreach($this->page->swef->usergroups as $ug): ?>
+                <div class="input">
+                  <label for="">&nbsp;</label>
+<?php         if(in_array($ug[SWEF_COL_USERGROUP],$table[swefminer_col_deleters])): ?>
+                  <input type="checkbox" name="<?php echo swefminer_form_deleter_pfx.htmlentities($ug[SWEF_COL_USERGROUP]); ?>" checked="checked" />
+<?php         else: ?>
+                  <input type="checkbox" name="<?php echo swefminer_form_deleter_pfx.htmlentities($ug[SWEF_COL_USERGROUP]); ?>" />
+<?php         endif; ?>
+                  <label for=""><?php echo htmlentities ($ug[SWEF_COL_USERGROUP_NAME]); ?></label>
+                </div>
+<?php       endforeach; ?>
+                <div class="input">
+                  <label for=""><t en>Columns</t>:</label>
+                </div>
+<?php       foreach($this->columns as $column): ?>
+                <div class="input">
+                  <details>
+                    <summary>
+<?php         if(array_key_exists(swefminer_col_ignore,$column) && !$column[swefminer_col_ignore]): ?>
+                      <t en>Edit</t> <?php echo htmlentities ($column[swefminer_col_table_schema]); ?>.<?php echo htmlentities ($column[swefminer_col_table_name]); ?>.<strong><?php echo htmlentities ($column[swefminer_col_column_name]); ?></strong>
+<?php         else: ?>
+                      <t en>Add</t> <?php echo htmlentities ($column[swefminer_col_table_schema]); ?>.<?php echo htmlentities ($column[swefminer_col_table_name]); ?>.<?php echo htmlentities ($column[swefminer_col_column_name]); ?>
+<?php         endif; ?>
+                    </summary>
+                  </details>
+                </div>
+<?php       endforeach; ?>
+                <div class="input">
+                  <label for="">&nbsp;</label>
+                  <input type="submit" name="<t en><?php echo swefminer_form_update; ?></t>" value="<t en>Update table info</t>" />
+                </div>
+                <div class="input">
+                  <label for="">&nbsp;</label>
+                  <input type="submit" name="<t en><?php echo swefminer_form_remove; ?></t>" value="<t en>Remove table from model</t>" />
+                </div>
+                <input type="hidden" name="<t en><?php echo swefminer_form_database; ?></t>" value="<?php echo htmlentities ($table[swefminer_col_database]); ?>" />
+                <input type="hidden" name="<?php echo swefminer_form_table; ?>" value="<?php echo htmlentities ($table[swefminer_col_table]); ?>" />
+              </form>
+            </details>
+          </td>
+          <td>
+            <?php echo htmlentities ($table[swefminer_col_table_schema]); ?>.<strong><?php echo htmlentities ($table[swefminer_col_table_name]); ?></strong>
+          </td>
+          <td>
+          <input type="button" value="<?php echo htmlentities ($table[swefminer_col_title]); ?>" />
         </td>
         <td>
           <em><?php echo htmlentities ($table[swefminer_col_description]); ?></em>
         </td>
         <td>
-        <details class="tooltip">
-          <summary>?</summary>
-          <pre class="tooltip tooltip-top-right"><?php echo htmlentities (print_r($table,SWEF_BOOL_TRUE)); ?></pre>
-        </details>
-        </td>
-<?php else: ?>
-
-        <td>
-          <details class="tooltip">
-            <summary>Add</summary>
-            <div class="tooltip tooltip-top-left">
-              <p>Add this table to model:</p>
-              <p><a href="">Add</a></p>
-            </div>
-          </details>
-        </td>
-        <td>
-          <?php echo htmlentities ($table[swefminer_col_table_schema]); ?>.<?php echo htmlentities ($table[swefminer_col_table_name]); ?>
-        </td>
-        <td>
-          &nbsp;
-        </td>
-        <td>
-          &nbsp;
-        </td>
-        <td>
           <details class="tooltip">
             <summary>?</summary>
-            <pre class="tooltip tooltip-top-right"><?php echo htmlentities (print_r($table,SWEF_BOOL_TRUE)); ?></pre>
+            <pre class="tooltip tooltip-top-right" onclick="this.parentElement.removeAttribute('open')"><?php echo htmlentities (print_r($table,SWEF_BOOL_TRUE)); ?></pre>
           </details>
-        </td>
-<?php endif; ?>
-
-      </tr>
+          </td>
+        </tr>
+<?php     else: ?>
+        <tr>
+          <td>
+            <details class="tooltip">
+              <summary>Add</summary>
+              <form class="tooltip tooltip-top-left tooltip-form" method="post" action="<?php echo htmlentities($_SERVER['REQUEST_URI']); ?>">
+                <button onclick="this.parentElement.parentElement.removeAttribute('open');return false"><t en>Close</t></button>
+                <input type="submit" name="<?php echo swefminer_form_update; ?>" value="Add <?php echo htmlentities ($table[swefminer_col_table_name]); ?> to model" />
+                <input type="hidden" name="<?php echo swefminer_form_database; ?>" value="<?php echo htmlentities ($table[swefminer_col_table_schema]); ?>" />
+                <input type="hidden" name="<?php echo swefminer_form_table; ?>" value="<?php echo htmlentities ($table[swefminer_col_table_name]); ?>" />
+              </form>
+            </details>
+          </td>
+          <td>
+            <?php echo htmlentities($table[swefminer_col_table_schema]); ?>.<?php echo htmlentities ($table[swefminer_col_table_name]).SWEF_STR__CRLF; ?>
+          </td>
+          <td>
+            <input disabled type="button" value="<?php echo htmlentities ($table[swefminer_col_table_name]); ?>" />
+          </td>
+          <td>
+            &nbsp;
+          </td>
+          <td>
+            <details class="tooltip">
+              <summary>?</summary>
+              <pre class="tooltip tooltip-top-right" onclick="this.parentElement.removeAttribute('open')"><?php echo htmlentities (print_r($table,SWEF_BOOL_TRUE)); ?></pre>
+            </details>
+          </td>
+        </tr>
+<?php     endif; ?>
 <?php   endforeach; ?>
-
       </tbody>
     </table>
-
-  </form>
 
 <?php endif; ?>
 
