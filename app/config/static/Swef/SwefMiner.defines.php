@@ -6,6 +6,7 @@ define ( 'swefminer_limit_rows',             50                                 
 
 
 // Form field names
+define ( 'swefminer_form_columns',           'swefminer-columns'                                    );
 define ( 'swefminer_form_database',          'swefminer-database'                                   );
 define ( 'swefminer_form_description',       'swefminer-description'                                );
 define ( 'swefminer_form_posted',            'swefminer-posted'                                     );
