@@ -127,7 +127,6 @@ else {
 <?php         if($column[swefminer_col_table_name]==$table[swefminer_col_table_name]): ?>
                     <tr>
                       <td>
-                        <label for="">&nbsp;</label>
 <?php           if(array_key_exists(swefminer_col_ignore,$column) && !$column[swefminer_col_ignore]): ?>
                         <button class="swefminer button normal" data-action="column-remove" data-database="<?php echo htmlentities ($column[swefminer_col_table_schema]); ?>" data-table="<?php echo htmlentities ($column[swefminer_col_table_name]); ?>" data-column="<?php echo htmlentities ($column[swefminer_col_table_name]); ?>"><t en>Remove column from model</t></button>
 <?php           elseif(array_key_exists(swefminer_col_ignore,$column)): ?>
@@ -172,7 +171,6 @@ else {
                   <tbody>
                     <tr>
                       <td>
-                        <label for="">&nbsp;</label>
                         <input type="submit" name="<t en><?php echo swefminer_form_remove; ?></t>" value="<t en>Remove table from model</t>" class="normal button" />
                         <label for=""><em><?php echo htmlentities ($table[swefminer_col_table_schema]); ?>.<?php echo htmlentities ($table[swefminer_col_table_name]); ?></em></label>
                       </td>
