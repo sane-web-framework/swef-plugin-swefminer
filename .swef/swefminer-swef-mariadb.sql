@@ -4,13 +4,17 @@ DELIMITER $$
 DROP PROCEDURE IF EXISTS `swefMinerColumns` $$
 CREATE PROCEDURE `swefMinerColumns` (
       IN    `dbn` VARCHAR(64) CHARSET ascii
+     ,IN    `lik` VARCHAR(64) CHARSET ascii
 )
 BEGIN
-  SELECT    `column_Ignore` AS `ignore`
+  SELECT    (`column_Ignore` OR `table_Ignore`) AS `ignore`
            ,`column_Database` AS `database`
            ,`column_Table` AS `table`
            ,`column_Column` AS `column`
+           ,`column_Trashes_Record` AS `trashes_record`
            ,`column_Is_UUID` AS `is_uuid`
+           ,`column_Is_Edited_By` AS `is_edited_by`
+           ,`column_Is_Edited` AS `is_edited`
            ,`column_Parent_Table` AS `parent_table`
            ,`column_Parent_Column` AS `parent_column`
            ,`column_Describes_Record` AS `describes_record`
@@ -25,6 +29,9 @@ BEGIN
                 SEPARATOR ','
               ) AS `updaters`
   FROM      `swefminer_column`
+  LEFT JOIN `swefminer_table`
+         ON `table_database`=`column_Database`
+        AND `table_table`=`column_Table`
   LEFT JOIN `swefminer_select`
          ON `select_Database`=`column_Database`
         AND `select_Table`=`column_Table`
@@ -34,6 +41,7 @@ BEGIN
         AND `update_Table`=`column_Table`
         AND `update_Column`=`column_Column`
   WHERE     `column_Database`=dbn
+    AND     `column_Table` LIKE lik
   GROUP BY  `column_Table`,`column_Column`
   ORDER BY  `column_Table`,`column_Column`
   ;
@@ -73,6 +81,7 @@ END$$
 
 DROP PROCEDURE IF EXISTS `swefMinerTables` $$
 CREATE PROCEDURE `swefMinerTables` (
+      IN    `lik` VARCHAR(64) CHARSET ascii
 )
 BEGIN
   SELECT    `table_Ignore` AS `ignore`
@@ -95,6 +104,7 @@ BEGIN
   LEFT JOIN `swefminer_delete`
          ON `delete_Database`=`table_Database`
         AND `delete_Table`=`table_Table`
+  WHERE `table_Table` LIKE lik
   GROUP BY  `table_Table`
   ORDER BY  `table_Database`,`table_Table`
   ;

@@ -1,0 +1,145 @@
+
+<?php if(count($tables)): ?>
+    <table>
+      <tbody>
+<?php   foreach($this->page->swef->usergroups as $usergroup): ?>
+        <tr>
+          <td>
+            <details
+              ontoggle="if(this.getAttribute('open')==null){history.replaceState(null,'<t en>SwefMiner home</t>','?c=%5cSwef%5cSwefMiner&amp;o=<?php echo htmlentities ($this->page->_GET(SWEF_GET_OPTION)); ?>')}else{history.replaceState(null,'<t en>User group</t>: <?php echo htmlentities ($usergroup[SWEF_COL_USERGROUP_NAME]); ?>','?c=%5cSwef%5cSwefMiner&amp;o=<?php echo htmlentities ($this->page->_GET(SWEF_GET_OPTION)); ?>&amp;ug=<?php echo htmlentities ($usergroup[SWEF_COL_USERGROUP]); ?>')}"
+<?php if($usergroup[SWEF_COL_USERGROUP]==$this->page->_GET(swefminer_get_usergroup)): ?>
+              open="open"
+<?php endif; ?>
+            >
+              <summary><strong><?php echo htmlentities ($usergroup[SWEF_COL_USERGROUP_NAME]); ?> <t en>may</t></strong> ...</summary>
+              <div class="dashboard-layer dashboard-layer-2">
+                <h1 onclick="this.parentElement.parentElement.removeAttribute('open');return false" class="close">&#215;</h1>
+                <h3><?php echo htmlentities ($usergroup[SWEF_COL_USERGROUP_NAME]); ?> <t en>may</t> ...</h3>
+                <table class="float-right">
+                  <thead>
+                  	<tr>
+          	          <th><strong><t en>Tables</t></strong></th>
+                	  <th class="warn-2"><t en>Insert</t></th>
+                	  <th class="warn-4"><t en>Delete</t></th>
+                    </tr>
+                  </thead>
+                  <tbody class="list">
+<?php     $count=0; ?>
+<?php     foreach($tables as $table): ?>
+<?php       if(array_key_exists(swefminer_col_ignore,$table) && !$table[swefminer_col_ignore]): ?>
+<?php         $count++; ?>
+                    <tr>
+                      <td>
+                        <label><strong><em><?php echo htmlentities ($table[swefminer_col_table]); ?></em></strong></label>
+                      </td>
+                      <td class="warn-2 center">
+                        <input
+                          form="<?php echo htmlentities ($this->formID($usergroup[SWEF_COL_USERGROUP],$table[swefminer_col_database],$table[swefminer_col_table])); ?>"
+                          name="<?php echo htmlentities (swefminer_form_inserter); ?>"
+                          type="checkbox"
+                          onchange="swef.wait();this.form.submit()"
+<?php         if(in_array($usergroup[SWEF_COL_USERGROUP],$table[swefminer_col_inserters])): ?>
+                          checked="checked"
+<?php         endif; ?>
+                        />
+                      </td>
+                      <td class="warn-4 center">
+                        <input
+                          form="<?php echo htmlentities ($this->formID($usergroup[SWEF_COL_USERGROUP],$table[swefminer_col_database],$table[swefminer_col_table])); ?>"
+                          name="<?php echo htmlentities (swefminer_form_deleter); ?>"
+                          type="checkbox"
+                          onchange="swef.wait();this.form.submit()"
+<?php         if(in_array($usergroup[SWEF_COL_USERGROUP],$table[swefminer_col_deleters])): ?>
+                          checked="checked"
+<?php         endif; ?>
+                        />
+                      </td>
+                    </tr>
+<?php       endif; ?>
+<?php     endforeach; ?>
+<?php     if(!$count): ?>
+                    <tr>
+                      <td colspan="3">
+                        <label>No tables</label>
+                      </td>
+                    </tr>
+<?php     endif; ?>
+                  </tbody>
+                </table>
+<?php     foreach($tables as $table): ?>
+<?php       if(array_key_exists(swefminer_col_ignore,$table) && !$table[swefminer_col_ignore]): ?>
+                <form id="<?php echo htmlentities ($this->formID($usergroup[SWEF_COL_USERGROUP],$table[swefminer_col_database],$table[swefminer_col_table])); ?>" action="?c=%5cSwef%5cSwefMiner&amp;o=<?php echo htmlentities ($this->page->_GET(SWEF_GET_OPTION)); ?>&amp;ug=<?php echo htmlentities ($usergroup[SWEF_COL_USERGROUP]); ?>" method="post">
+                  <input type="hidden" name="<?php echo htmlentities (swefminer_form_usergroup_table); ?>" value="1" />
+                  <input type="hidden" name="<?php echo htmlentities (swefminer_form_table); ?>" value="<?php echo htmlentities ($table[swefminer_col_table]); ?>" />
+                </form>
+<?php       endif; ?>
+<?php     endforeach; ?>
+                <table class="float-left">
+                  <thead>
+                    <tr>
+                      <th><strong><t en>Columns</t></strong></th>
+                      <th class="warn-1"><t en>Select</t></th>
+                      <th class="warn-3"><t en>Update</t></th>
+          	        </tr>
+                  </thead>
+                  <tbody class="list">
+<?php     $count=0; ?>
+<?php     foreach($this->columns as $column): ?>
+<?php       if(array_key_exists(swefminer_col_ignore,$column) && !$column[swefminer_col_ignore]): ?>
+<?php         $count++; ?>
+                    <tr>
+                      <td>
+                        <label><strong><em><?php echo htmlentities ($column[swefminer_col_column]); ?></em></strong></label>
+                      </td>
+                      <td class="warn-1 center">
+                        <input
+                          form="<?php echo htmlentities ($this->formID($usergroup[SWEF_COL_USERGROUP],$column[swefminer_col_database],$column[swefminer_col_table],$column[swefminer_col_column])); ?>"
+                          name="<?php echo htmlentities (swefminer_form_selector); ?>"
+                          type="checkbox"
+                          onchange="swef.wait();this.form.submit()"
+<?php         if(in_array($usergroup[SWEF_COL_USERGROUP],$column[swefminer_col_selectors])): ?>
+                          checked="checked"
+<?php         endif; ?>
+                        />
+                      </td>
+                      <td class="warn-3 center">
+                        <input
+                          form="<?php echo htmlentities ($this->formID($usergroup[SWEF_COL_USERGROUP],$column[swefminer_col_database],$column[swefminer_col_table],$column[swefminer_col_column])); ?>"
+                          name="<?php echo htmlentities (swefminer_form_updater); ?>"
+                          type="checkbox"
+                          onchange="swef.wait();this.form.submit()"
+<?php         if(in_array($usergroup[SWEF_COL_USERGROUP],$column[swefminer_col_updaters])): ?>
+                          checked="checked"
+<?php         endif; ?>
+                        />
+                      </td>
+                    </tr>
+<?php       endif; ?>
+<?php     endforeach; ?>
+<?php     if(!$count): ?>
+                    <tr>
+                      <td colspan="3">
+                        <label>No columns</label>
+                      </td>
+                    </tr>
+<?php     endif; ?>
+                  </tbody>
+                </table>
+<?php     foreach($this->columns as $column): ?>
+<?php       if(array_key_exists(swefminer_col_ignore,$column) && !$column[swefminer_col_ignore]): ?>
+                <form id="<?php echo htmlentities ($this->formID($usergroup[SWEF_COL_USERGROUP],$column[swefminer_col_database],$column[swefminer_col_table],$column[swefminer_col_column])); ?>" action="?c=%5cSwef%5cSwefMiner&amp;o=<?php echo htmlentities ($this->page->_GET(SWEF_GET_OPTION)); ?>&amp;ug=<?php echo htmlentities ($usergroup[SWEF_COL_USERGROUP]); ?>" method="post">
+                  <input type="hidden" name="<?php echo htmlentities (swefminer_form_usergroup_column); ?>" value="1" />
+                  <input type="hidden" name="<?php echo htmlentities (swefminer_form_table); ?>" value="<?php echo htmlentities ($column[swefminer_col_table]); ?>" />
+                  <input type="hidden" name="<?php echo htmlentities (swefminer_form_column); ?>" value="<?php echo htmlentities ($column[swefminer_col_column]); ?>" />
+                </form>
+<?php       endif; ?>
+<?php     endforeach; ?>
+              </div>
+            </details>
+          </td>
+        </tr>
+<?php   endforeach; ?>
+      </tbody>
+    </table>
+<?php endif; ?>
+

@@ -1,0 +1,108 @@
+                <table class="list">
+                  <thead>
+                    <tr>
+                      <th>
+                        &nbsp;
+                      </th>
+                      <th>
+                        <t en>Permissions</t>
+                      </th>
+                      <th>
+                        <t en>Column</t>
+                      </th>
+                      <th>
+                        <t en>Parent</t>
+                      </th>
+                      <th class="write-vertical-up">
+                        <div><t en>Describes record</t></div>
+                      </th>
+                      <th class="write-vertical-up">
+                        <div><t en>Trashes record</t></div>
+                      </th>
+                      <th class="write-vertical-up">
+                        <div><t en>Is primary</t></div>
+                      </th>
+                      <th class="write-vertical-up">
+                        <div><t en>Is auto-UUID</t></div>
+                      </th>
+                      <th class="write-vertical-up">
+                        <div><t en>Is audit UUID</t></div>
+                      </th>
+                      <th class="write-vertical-up">
+                        <div class="write-vertical-up"><t en>Is audit time</t></div>
+                      </th>
+                      <th>
+                        <t en>Heading</t>
+                      </th>
+                      <th>
+                        <t en>Hint</t>
+                      </th>
+                      <th>
+                        &nbsp;
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+<?php       $pris = 0; ?>
+<?php       foreach($this->columns as $column): ?>
+<?php         if($column[swefminer_col_table_name]==$table[swefminer_col_table_name]): ?>
+<?php //        ############################## ?>
+<?php           require swefminer_file_column; ?>
+<?php //        ############################## ?>
+<?php         endif; ?>
+<?php       endforeach; ?>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <th>
+                        &nbsp;
+                      </th>
+                      <th>
+                        &nbsp;
+                      </th>
+                      <th>
+                        &nbsp;
+                      </th>
+                      <th>
+                        &nbsp;
+                      </th>
+                      <th class="write-vertical-down">
+                        <div><t en>Describes record</t></div>
+                      </th>
+                      <th class="write-vertical-down">
+                        <div><t en>Trashes record</t></div>
+                      </th>
+                      <th class="write-vertical-down">
+                        <div><t en>Is primary</t></div>
+                      </th>
+                      <th class="write-vertical-down">
+                        <div><t en>Is auto-UUID</t></div>
+                      </th>
+                      <th class="write-vertical-down">
+                        <div><t en>Is audit UUID</t></div>
+                      </th>
+                      <th class="write-vertical-down">
+                        <div><t en>Is audit time</t></div>
+                      </th>
+                      <th>
+                        &nbsp;
+                      </th>
+                      <th>
+                        &nbsp;
+                      </th>
+                      <th>
+                        &nbsp;
+                      </th>
+                    </tr>
+                  </tfoot>
+                </table>
+<?php       foreach($this->columns as $column): ?>
+<?php         if($column[swefminer_col_table_name]==$table[swefminer_col_table_name]): ?>
+                <form id="<?php echo htmlentities ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name])); ?>" action="?c=%5cSwef%5cSwefMiner&amp;o=<?php echo htmlentities ($this->page->_GET(SWEF_GET_OPTION)); ?>&amp;t=<?php echo htmlentities ($column[swefminer_col_table_name]); ?>" method="post">
+                  <input type="hidden" name="<?php echo swefminer_form_column_update; ?>" value="1" />
+                  <input type="hidden" name="<?php echo swefminer_form_column; ?>" value="<?php echo htmlentities ($column[swefminer_col_column_name]); ?>" />
+                  <input type="hidden" name="<?php echo swefminer_form_table; ?>" value="<?php echo htmlentities ($column[swefminer_col_table_name]); ?>" />
+                  <input type="hidden" name="<t en><?php echo swefminer_form_database; ?></t>" value="<?php echo htmlentities ($column[swefminer_col_table_schema]); ?>" />
+                </form>
+<?php         endif; ?>
+<?php       endforeach; ?>

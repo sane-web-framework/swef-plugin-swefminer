@@ -4,6 +4,7 @@ DELIMITER $$
 DROP PROCEDURE IF EXISTS `swefMinerModelColumns` $$
 CREATE PROCEDURE `swefMinerModelColumns` (
       IN    `dbn` VARCHAR(64) CHARSET utf8
+     ,IN    `lik` VARCHAR(64) CHARSET utf8
 )
 BEGIN
   SELECT    `information_schema`.`COLUMNS`.*
@@ -16,6 +17,7 @@ BEGIN
       	    `TABLE_CATALOG`,`TABLE_SCHEMA`,`TABLE_NAME`,`COLUMN_NAME`
       )
   WHERE     `information_schema`.`COLUMNS`.`TABLE_SCHEMA`=dbn
+    AND     `information_schema`.`COLUMNS`.`TABLE_NAME` LIKE lik
   ORDER BY  `information_schema`.`COLUMNS`.`TABLE_NAME`
            ,`information_schema`.`COLUMNS`.`ORDINAL_POSITION`
   ;
@@ -44,7 +46,8 @@ END$$
 
 DROP PROCEDURE IF EXISTS `swefMinerModelTables` $$
 CREATE PROCEDURE `swefMinerModelTables` (
-      IN `dbn` VARCHAR(64) CHARSET utf8
+      IN    `dbn` VARCHAR(64) CHARSET utf8
+     ,IN    `lik` VARCHAR(64) CHARSET utf8
 )
 BEGIN
   SELECT    `information_schema`.`TABLES`.*
@@ -58,6 +61,7 @@ BEGIN
             `TABLE_CATALOG`,`TABLE_SCHEMA`,`TABLE_NAME`
         )
   WHERE     `information_schema`.`COLUMNS`.`TABLE_SCHEMA`=dbn
+    AND     `information_schema`.`COLUMNS`.`TABLE_NAME` LIKE lik
     AND     `information_schema`.`COLUMNS`.`COLUMN_KEY`='PRI'
   GROUP BY  `information_schema`.`COLUMNS`.`TABLE_NAME`
   ORDER BY  `information_schema`.`COLUMNS`.`TABLE_NAME`
