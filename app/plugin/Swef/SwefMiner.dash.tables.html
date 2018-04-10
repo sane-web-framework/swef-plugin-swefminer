@@ -12,7 +12,7 @@
             >
               <summary>Edit</summary>
               <div class="dashboard-layer dashboard-layer-1 swefminer-form-table">
-                <form class="list" method="post" action="?c=%5cSwef%5cSwefMiner&amp;o=<?php echo htmlentities ($this->page->_GET(SWEF_GET_OPTION)); ?>&amp;t=<?php echo htmlentities ($table[swefminer_col_table_name]); ?>">
+                <form class="list" method="post" action="?c=%5cSwef%5cSwefMiner&amp;o=<?php echo htmlentities ($this->page->_GET(SWEF_GET_OPTION)); ?>&amp;t=<?php echo htmlentities ($table[swefminer_col_table_name]); ?>" onsubmit="swef.wait()">
                   <h1 onclick="this.parentElement.parentElement.parentElement.removeAttribute('open');return false" class="close">&#215;</h1>
                   <table>
                     <thead>
@@ -49,7 +49,7 @@
                           <input class="wide" type="text" name="<?php echo swefminer_form_description; ?>" value="<?php echo htmlentities ($table[swefminer_col_description]); ?>" onkeydown="this.classList.add('changed')" onchange="this.classList.add('changed')" />
                         </td>
                         <td>
-                          <input type="submit" name="<t en><?php echo swefminer_form_table_update; ?></t>" value="<t en>Save</t>" class="button" />
+                          <input type="submit" name="<?php echo swefminer_form_couple; ?>" value="<t en>Save</t>" class="button" />
                         </td>
                       </tr>
                     </tbody>
@@ -79,6 +79,9 @@
             <?php echo htmlentities ($table[swefminer_col_table_schema]); ?>.<strong><?php echo htmlentities ($table[swefminer_col_table_name]); ?></strong>
           </td>
           <td>
+            <em><?php echo htmlentities ($table[swefminer_col_title]); ?></em>
+          </td>
+          <td>
             <em><?php echo htmlentities ($table[swefminer_col_description]); ?></em>
           </td>
           <td>
@@ -95,9 +98,9 @@
               <summary>Add</summary>
               <div class="tooltip tooltip-top-left tooltip-small tooltip-form" method="post" action="<?php echo htmlentities($_SERVER['REQUEST_URI']); ?>">
                 <h1 onclick="this.parentElement.parentElement.removeAttribute('open');return false" class="close">&#215;</h1>
-                <form class="list" method="post" action="?c=%5cSwef%5cSwefMiner&amp;o=<?php echo htmlentities ($this->page->_GET(SWEF_GET_OPTION)); ?>&amp;t=<?php echo htmlentities ($table[swefminer_col_table_name]); ?>">
+                <form class="list" method="post" action="?c=%5cSwef%5cSwefMiner&amp;o=<?php echo htmlentities ($this->page->_GET(SWEF_GET_OPTION)); ?>&amp;t=<?php echo htmlentities ($table[swefminer_col_table_name]); ?>" onsubmit="swef.wait()">
                   <div class="input allow-float">
-                    <input type="submit" name="<?php echo swefminer_form_update; ?>" value="Add <?php echo htmlentities ($table[swefminer_col_table_name]); ?> to model" />
+                    <input type="submit" name="<?php echo swefminer_form_couple; ?>" value="Couple <?php echo htmlentities ($table[swefminer_col_table_name]); ?> to model" />
                   </div>
                   <input type="hidden" name="<?php echo swefminer_form_database; ?>" value="<?php echo htmlentities ($table[swefminer_col_table_schema]); ?>" />
                   <input type="hidden" name="<?php echo swefminer_form_table; ?>" value="<?php echo htmlentities ($table[swefminer_col_table_name]); ?>" />
@@ -107,6 +110,9 @@
           </td>
           <td>
             <?php echo htmlentities($table[swefminer_col_table_schema]); ?>.<?php echo htmlentities ($table[swefminer_col_table_name]).SWEF_STR__CRLF; ?>
+          </td>
+          <td>
+            &nbsp;
           </td>
           <td>
             &nbsp;

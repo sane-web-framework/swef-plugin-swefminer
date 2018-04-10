@@ -10,10 +10,13 @@ define ( 'swefminer_form_column',            'swefminer-column'                 
 define ( 'swefminer_form_column_pfx',        'swefminer-column-'                                    );
 define ( 'swefminer_form_column_update',     'swefminer-column-update'                              );
 define ( 'swefminer_form_columns',           'swefminer-columns'                                    );
+define ( 'swefminer_form_couple',            'swefminer-couple'                                     );
 define ( 'swefminer_form_database',          'swefminer-database'                                   );
 define ( 'swefminer_form_deleter',           'swefminer-deleter'                                    );
 define ( 'swefminer_form_deleter_pfx',       'swefminer-deleter-'                                   );
 define ( 'swefminer_form_description',       'swefminer-description'                                );
+define ( 'swefminer_form_heading',           'swefminer-heading'                                    );
+define ( 'swefminer_form_hint',              'swefminer-hint'                                       );
 define ( 'swefminer_form_inserter',          'swefminer-inserter'                                   );
 define ( 'swefminer_form_inserter_pfx',      'swefminer-inserter-'                                  );
 define ( 'swefminer_form_pfx',               'swefminer-form-'                                      );
@@ -26,7 +29,6 @@ define ( 'swefminer_form_table_pfx',         'swefminer-table-'                 
 define ( 'swefminer_form_table_update',      'swefminer-table-update'                               );
 define ( 'swefminer_form_table_usergroup',   'swefminer-table-usergroup'                            );
 define ( 'swefminer_form_title',             'swefminer-title'                                      );
-define ( 'swefminer_form_update',            'swefminer-update'                                     );
 define ( 'swefminer_form_updater',           'swefminer-updater'                                    );
 define ( 'swefminer_form_updater_pfx',       'swefminer-updater-'                                   );
 define ( 'swefminer_form_usergroup_column',  'swefminer-usergroup-column'                           );
@@ -48,6 +50,10 @@ define ( 'swefminer_file_usergroups',        SWEF_DIR_PLUGIN.'/Swef/SwefMiner.da
 define ( 'swefminer_call_model_columns',     'swefMinerModelColumns'                                );
 define ( 'swefminer_call_model_referers',    'swefMinerModelReferers'                               );
 define ( 'swefminer_call_model_tables',      'swefMinerModelTables'                                 );
+define ( 'swefminer_call_column_create',     'swefMinerColumnCreate'                                );
+define ( 'swefminer_call_column_remove',     'swefMinerColumnRemove'                                );
+define ( 'swefminer_call_column_unremove',   'swefMinerColumnUnremove'                              );
+define ( 'swefminer_call_column_update',     'swefMinerColumnUpdate'                                );
 define ( 'swefminer_call_columns',           'swefMinerColumns'                                     );
 define ( 'swefminer_call_table_create',      'swefMinerTableCreate'                                 );
 define ( 'swefminer_call_table_remove',      'swefMinerTableRemove'                                 );
@@ -105,24 +111,26 @@ define ( 'swefminer_columns_lookup',         'swefminer-columns'                
 define ( 'swefminer_concat_separator',       ';;'                                                   );
 define ( 'swefminer_formid_pfx',             'swefminer-form-'                                      );
 define ( 'swefminer_formid_sep',             '-'                                                    );
+define ( 'swefminer_pdo_driver_mysql',       'mysql'                                                );
 define ( 'swefminer_pdo_support',            '<^[A-z0-9_]+$>'                                       );
 define ( 'swefminer_preg_table',             '<^[A-z0-9_]+$>'                                       );
-define ( 'swefminer_str_indent',             '   '                                                  );
-define ( 'swefminer_str_like_all',           '%'                                                    );
-define ( 'swefminer_str_select',             'SELECT'                                               );
+define ( 'swefminer_str_dsn',                'dsn'                                                  );
 define ( 'swefminer_str_from',               'FROM'                                                 );
+define ( 'swefminer_str_indent',             '   '                                                  );
 define ( 'swefminer_str_left_join',          'LEFT JOIN'                                            );
+define ( 'swefminer_str_like_all',           '%'                                                    );
 define ( 'swefminer_str_pfx_dm',             'swefminer_dm_'                                        );
 define ( 'swefminer_str_pri',                'PRI'                                                  );
+define ( 'swefminer_str_pwd',                'pwd'                                                  );
+define ( 'swefminer_str_select',             'SELECT'                                               );
 define ( 'swefminer_str_sfx_dbn',            '_dbn'                                                 );
 define ( 'swefminer_str_sfx_dsn',            '_dsn'                                                 );
 define ( 'swefminer_str_sfx_usr',            '_usr'                                                 );
 define ( 'swefminer_str_sfx_pwd',            '_pwd'                                                 );
-define ( 'swefminer_str_sfx_mod',            '_mod'                                                 );
 define ( 'swefminer_str_sfx_tag',            '_tag'                                                 );
 define ( 'swefminer_str_sfx_tlk',            '_tlk'                                                 );
+define ( 'swefminer_str_usr',                'usr'                                                  );
 define ( 'swefminer_supported_pdo_drivers',  'mysql'                                                );
-define ( 'swefminer_pdo_driver_mysql',       'mysql'                                                );
 
 
 ?>

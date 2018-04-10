@@ -9,7 +9,6 @@ define ( 'swefminer_uri_browse',            '/miner'                            
 //define ( 'swefminer_dm_example_usr',      'my_usr'                                                        );
 //define ( 'swefminer_dm_example_tlk',      'my\_model\_%'                                                  );
 //define ( 'swefminer_dm_example_pwd',      'my_pwd'                                                        );
-//define ( 'swefminer_dm_example_mod',      true                                                            );
 //define ( 'swefminer_dm_example_tag',      'My Data Model'                                                 );
 
 ?>

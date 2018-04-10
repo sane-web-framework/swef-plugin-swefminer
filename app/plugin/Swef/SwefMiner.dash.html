@@ -4,16 +4,16 @@ $options            = array (
     ''              => 'SwefMiner options:'
    ,'inspect'       => 'Inspect plugin properties'
 );
-foreach ($this->tables as $dbn=>$ts) {
-    $options[$dbn]  = 'DB = '.$dbn;
+foreach ($this->models as $dbn=>$tag) {
+    $options[$dbn]  = 'DB = '.$tag;
 }
 $option             = $this->page->_GET (SWEF_GET_OPTION);
 if (!array_key_exists($option,$options)) {
     $option         = SWEF_STR__EMPTY;
 }
-if (array_key_exists($option,$this->tables)) {
+if (array_key_exists($option,$this->models)) {
     $dbn            = $option;
-    $tables         = $this->tables[$dbn];
+    $tables         = $this->tables;
 }
 else {
     $tables         = array ();

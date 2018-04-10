@@ -1,6 +1,42 @@
 
 DELIMITER $$
 
+DROP PROCEDURE IF EXISTS `swefMinerColumnCreate` $$
+CREATE PROCEDURE `swefMinerColumnCreate` (
+      IN    `dbn` VARCHAR(64) CHARSET ascii
+     ,IN    `tbn` VARCHAR(64) CHARSET ascii
+     ,IN    `cln` VARCHAR(64) CHARSET ascii
+)
+BEGIN
+  INSERT INTO
+            `swefminer_column`
+  SET
+            `column_Database`=dbn
+           ,`column_Table`=tbn
+           ,`column_Column`=cln
+           ,`column_Heading`=cln
+           ,`column_Hint`='Column hint'
+  ;
+END$$
+
+DROP PROCEDURE IF EXISTS `swefMinerColumnRemove` $$
+CREATE PROCEDURE `swefMinerColumnRemove` (
+      IN    `dbn` VARCHAR(64) CHARSET ascii
+     ,IN    `tbn` VARCHAR(64) CHARSET ascii
+     ,IN    `cln` VARCHAR(64) CHARSET ascii
+)
+BEGIN
+  UPDATE
+            `swefminer_column`
+  SET
+            `column_Ignore`='1'
+  WHERE     `column_Database`=dbn
+    AND     `column_Table`=tbn
+    AND     `column_Column`=cln
+  LIMIT 1
+  ;
+END$$
+
 DROP PROCEDURE IF EXISTS `swefMinerColumns` $$
 CREATE PROCEDURE `swefMinerColumns` (
       IN    `dbn` VARCHAR(64) CHARSET ascii
@@ -47,6 +83,45 @@ BEGIN
   ;
 END$$
 
+DROP PROCEDURE IF EXISTS `swefMinerColumnUnremove` $$
+CREATE PROCEDURE `swefMinerColumnUnremove` (
+      IN    `dbn` VARCHAR(64) CHARSET ascii
+     ,IN    `tbn` VARCHAR(64) CHARSET ascii
+     ,IN    `cln` VARCHAR(64) CHARSET ascii
+)
+BEGIN
+  UPDATE
+            `swefminer_column`
+  SET
+            `column_Ignore`='0'
+  WHERE     `column_Database`=dbn
+    AND     `column_Table`=tbn
+    AND     `column_Column`=cln
+  LIMIT 1
+  ;
+END$$
+
+DROP PROCEDURE IF EXISTS `swefMinerColumnUpdate` $$
+CREATE PROCEDURE `swefMinerColumnUpdate` (
+      IN    `dbn` VARCHAR(64) CHARSET ascii
+     ,IN    `tbn` VARCHAR(64) CHARSET ascii
+     ,IN    `cln` VARCHAR(64) CHARSET ascii
+     ,IN    `hdg` VARCHAR(64) CHARSET utf8
+     ,IN    `hnt` VARCHAR(255) CHARSET utf8
+)
+BEGIN
+  UPDATE
+            `swefminer_column`
+  SET
+            `column_Ignore`='0'
+           ,`column_Heading`=hdg
+           ,`column_Hint`=hnt
+  WHERE     `column_Database`=dbn
+    AND     `column_Table`=tbn
+    AND     `column_Column`=cln
+  ;
+END$$
+
 DROP PROCEDURE IF EXISTS `swefMinerTableCreate` $$
 CREATE PROCEDURE `swefMinerTableCreate` (
       IN    `dbn` VARCHAR(64) CHARSET ascii
@@ -81,7 +156,8 @@ END$$
 
 DROP PROCEDURE IF EXISTS `swefMinerTables` $$
 CREATE PROCEDURE `swefMinerTables` (
-      IN    `lik` VARCHAR(64) CHARSET ascii
+      IN    `dbn` VARCHAR(64) CHARSET ascii
+     ,IN    `lik` VARCHAR(64) CHARSET ascii
 )
 BEGIN
   SELECT    `table_Ignore` AS `ignore`
@@ -104,7 +180,8 @@ BEGIN
   LEFT JOIN `swefminer_delete`
          ON `delete_Database`=`table_Database`
         AND `delete_Table`=`table_Table`
-  WHERE `table_Table` LIKE lik
+  WHERE `table_Database`=dbn
+    AND `table_Table` LIKE lik
   GROUP BY  `table_Table`
   ORDER BY  `table_Database`,`table_Table`
   ;

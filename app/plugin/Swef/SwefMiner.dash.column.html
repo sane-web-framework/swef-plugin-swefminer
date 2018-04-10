@@ -101,7 +101,7 @@
                       <td>
                         <input
                           form="<?php echo htmlentities ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name])); ?>"
-                          name="<?php echo htmlentities (swefminer_col_heading); ?>"
+                          name="<?php echo htmlentities (swefminer_form_heading); ?>"
                           type="text"
                           placeholder="<t en>Column heading</t>"
 <?php           if(array_key_exists(swefminer_col_heading,$column)): ?>
@@ -120,7 +120,7 @@
                       <td>
                         <input
                           form="<?php echo htmlentities ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name])); ?>"
-                          name="<?php echo htmlentities (swefminer_col_hint); ?>"
+                          name="<?php echo htmlentities (swefminer_form_hint); ?>"
                           type="text"
                           placeholder="<t en>More information</t>"
 <?php           if(array_key_exists(swefminer_col_hint,$column)): ?>

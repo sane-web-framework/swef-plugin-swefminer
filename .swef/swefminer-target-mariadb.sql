@@ -8,9 +8,9 @@ CREATE PROCEDURE `swefMinerModelColumns` (
 )
 BEGIN
   SELECT    `information_schema`.`COLUMNS`.*
-           ,`information_schema`.`KEY_COLUMN_USAGE`.`REFERENCED_TABLE_SCHEMA`
-           ,`information_schema`.`KEY_COLUMN_USAGE`.`REFERENCED_TABLE_NAME`
-           ,`information_schema`.`KEY_COLUMN_USAGE`.`REFERENCED_COLUMN_NAME`
+           ,MAX(`information_schema`.`KEY_COLUMN_USAGE`.`REFERENCED_TABLE_SCHEMA`) AS `REFERENCED_TABLE_SCHEMA`
+           ,MAX(`information_schema`.`KEY_COLUMN_USAGE`.`REFERENCED_TABLE_NAME`) AS `REFERENCED_TABLE_NAME`
+           ,MAX(`information_schema`.`KEY_COLUMN_USAGE`.`REFERENCED_COLUMN_NAME`) AS `REFERENCED_COLUMN_NAME`
   FROM      `information_schema`.`COLUMNS`
   LEFT JOIN `information_schema`.`KEY_COLUMN_USAGE`
       USING (
@@ -18,6 +18,7 @@ BEGIN
       )
   WHERE     `information_schema`.`COLUMNS`.`TABLE_SCHEMA`=dbn
     AND     `information_schema`.`COLUMNS`.`TABLE_NAME` LIKE lik
+  GROUP BY  `information_schema`.`COLUMNS`.`COLUMN_NAME`
   ORDER BY  `information_schema`.`COLUMNS`.`TABLE_NAME`
            ,`information_schema`.`COLUMNS`.`ORDINAL_POSITION`
   ;
