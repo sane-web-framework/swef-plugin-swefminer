@@ -8,6 +8,8 @@ define ( 'swefminer_limit_rows',             50                                 
 // Form field names
 define ( 'swefminer_form_column',            'swefminer-column'                                     );
 define ( 'swefminer_form_column_pfx',        'swefminer-column-'                                    );
+define ( 'swefminer_form_column_remove',     'swefminer-column-remove'                              );
+define ( 'swefminer_form_column_unremove',   'swefminer-column-unremove'                            );
 define ( 'swefminer_form_column_update',     'swefminer-column-update'                              );
 define ( 'swefminer_form_columns',           'swefminer-columns'                                    );
 define ( 'swefminer_form_couple',            'swefminer-couple'                                     );

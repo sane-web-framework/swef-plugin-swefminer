@@ -1,18 +1,18 @@
                     <tr>
                       <td>
 <?php           if(array_key_exists(swefminer_col_ignore,$column) && !$column[swefminer_col_ignore]): ?>
-                        <button form="<?php echo htmlentities ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name])); ?>" class="swefminer button normal" data-action="column-remove" data-database="<?php echo htmlentities ($column[swefminer_col_table_schema]); ?>" data-table="<?php echo htmlentities ($column[swefminer_col_table_name]); ?>" data-column="<?php echo htmlentities ($column[swefminer_col_table_name]); ?>"><t en>Remove column from model</t></button>
+                        <input type="submit" name="<?php echo swefminer_form_column_remove; ?>" form="<?php echo htmlentities ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name])); ?>" value="<t en>Remove column from model</t>" class="swefminer button normal" />
 <?php           elseif(array_key_exists(swefminer_col_ignore,$column)): ?>
-                        <button form="<?php echo htmlentities ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name])); ?>" class="swefminer button normal" data-action="column-unremove" data-database="<?php echo htmlentities ($column[swefminer_col_table_schema]); ?>" data-table="<?php echo htmlentities ($column[swefminer_col_table_name]); ?>" data-column="<?php echo htmlentities ($column[swefminer_col_table_name]); ?>"><t en>Add column to model</t></button>
+                        <input type="submit" name="<?php echo swefminer_form_column_unremove; ?>" form="<?php echo htmlentities ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name])); ?>" value="<t en>Add column to model</t>" class="swefminer button normal" />
 <?php           else: ?>
-                        <button form="<?php echo htmlentities ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name])); ?>"class="swefminer button normal" data-action="column-add" data-database="<?php echo htmlentities ($column[swefminer_col_table_schema]); ?>" data-table="<?php echo htmlentities ($column[swefminer_col_table_name]); ?>" data-column="<?php echo htmlentities ($column[swefminer_col_table_name]); ?>"><t en>Add column to model</t></button>
+                        <input type="submit" form="<?php echo htmlentities ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name])); ?>" value="<t en>Add column to model</t>" class="swefminer button normal" />
 <?php           endif; ?>
                       </td>
                       <td>
 <?php           if(array_key_exists(swefminer_col_ignore,$column) && !$column[swefminer_col_ignore]): ?>
                         <details class="tooltip">
                           <summary><span class="warn-1"><t en>Selectors</t></span>/<span class="warn-3"><t en>Updaters</t></span></summary>
-                          <div class="tooltip tooltip-bottom-left">
+                          <div class="dashboard-layer dashboard-layer-2 swefminer-column-perms">
 <?php //            #################################### ?>
 <?php               require swefminer_file_column_perms; ?>
 <?php //            #################################### ?>
