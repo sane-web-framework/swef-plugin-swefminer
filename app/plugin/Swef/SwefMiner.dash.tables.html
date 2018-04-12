@@ -1,7 +1,10 @@
     <table>
       <tbody>
+<?php   $ts = 0; $tn = 0; $ccs = 0; $ccn = 0; ?>
 <?php   foreach($tables as $table): ?>
+<?php     $ts++; ?>
 <?php     if(array_key_exists(swefminer_col_ignore,$table) && !$table[swefminer_col_ignore]): ?>
+<?php       $tn++; ?>
         <tr>
           <td>
             <details
@@ -10,7 +13,19 @@
               open="open"
 <?php       endif; ?>
             >
-              <summary>Edit</summary>
+              <summary>
+                Edit
+<?php       $cs = 0; $cn = 0; ?>
+<?php       foreach($this->columns as $column): ?>
+<?php         if($column[swefminer_col_table_name]==$table[swefminer_col_table_name]): ?>
+<?php           $cs++; $ccs++; ?>
+<?php           if(array_key_exists(swefminer_col_ignore,$column) && !$column[swefminer_col_ignore]): ?>
+<?php             $cn++; $ccn++; ?>
+<?php           endif; ?>
+<?php         endif; ?>
+<?php       endforeach; ?>
+              <span>(<strong><?php echo $cn; ?></strong>/<?php echo $cs; ?>)</span>
+              </summary>
               <div class="dashboard-layer dashboard-layer-1 swefminer-form-table">
                 <form class="list" method="post" action="?c=%5cSwef%5cSwefMiner&amp;o=<?php echo htmlentities ($this->page->_GET(SWEF_GET_OPTION)); ?>&amp;t=<?php echo htmlentities ($table[swefminer_col_table_name]); ?>" onsubmit="swef.wait()">
                   <h1 onclick="this.parentElement.parentElement.parentElement.removeAttribute('open');return false" class="close">&#215;</h1>
@@ -128,3 +143,8 @@
 <?php   endforeach; ?>
       </tbody>
     </table>
+    <div class="headnote">
+      <strong class="warn-2"><?php echo $tn; ?></strong>/<?php echo $ts; ?> <strong><t en>tables</t></strong>
+      <t en>having</t>
+      <strong class="warn-2"><?php echo $ccn; ?></strong>/<?php echo $ccs; ?> <strong><t en>columns</t></strong>
+    </div>
