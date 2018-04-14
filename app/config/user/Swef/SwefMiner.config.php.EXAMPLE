@@ -1,14 +1,16 @@
 <?php
 
-// User interaction
-define ( 'swefminer_uri_browse',            '/miner'                                                        );
+// Data browser
+define ( 'swefminer_uris',                  'example:/miner-example;example2:/miner-example2'               );
+
 
 // Data model called "example"
-//define ( 'swefminer_dm_example_dsn',      'mysql:host=localhost;port=3306;charset=utf8'      );
-//define ( 'swefminer_dm_example_dbn',      'my_db'                                                        );
+//define ( 'swefminer_dm_example_dsn',      'mysql:host=localhost;port=3306;charset=utf8'                   );
+//define ( 'swefminer_dm_example_dbn',      'my_db'                                                         );
 //define ( 'swefminer_dm_example_usr',      'my_usr'                                                        );
-//define ( 'swefminer_dm_example_tlk',      'my\_model\_%'                                                  );
 //define ( 'swefminer_dm_example_pwd',      'my_pwd'                                                        );
+//define ( 'swefminer_dm_example_tlk',      'my\_model\_%'                                                  );
 //define ( 'swefminer_dm_example_tag',      'My Data Model'                                                 );
+//define ( 'swefminer_dm_example_bws',      '^/miner/+.*$'                                                  );
 
 ?>
