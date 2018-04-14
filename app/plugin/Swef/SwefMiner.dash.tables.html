@@ -8,7 +8,7 @@
         <tr>
           <td>
             <details
-              ontoggle="if(this.getAttribute('open')==null){history.replaceState(null,'<t en>SwefMiner home</t>','?c=%5cSwef%5cSwefMiner&amp;o=<?php echo htmlentities ($this->page->_GET(SWEF_GET_OPTION)); ?>')}else{history.replaceState(null,'<t en>User group</t>: <?php echo htmlentities ($usergroup[SWEF_COL_USERGROUP_NAME]); ?>','?c=%5cSwef%5cSwefMiner&amp;o=<?php echo htmlentities ($this->page->_GET(SWEF_GET_OPTION)); ?>&amp;t=<?php echo htmlentities ($table[swefminer_col_table_name]); ?>')}"
+              ontoggle="if(this.getAttribute('open')==null){history.replaceState(null,'<t en>SwefMiner home</t>','?c=%5cSwef%5cSwefMiner&amp;o=<?php echo htmlspecialchars ($this->page->_GET(SWEF_GET_OPTION)); ?>')}else{history.replaceState(null,'<t en>User group</t>: <?php echo htmlspecialchars ($usergroup[SWEF_COL_USERGROUP_NAME]); ?>','?c=%5cSwef%5cSwefMiner&amp;o=<?php echo htmlspecialchars ($this->page->_GET(SWEF_GET_OPTION)); ?>&amp;t=<?php echo htmlspecialchars ($table[swefminer_col_table_name]); ?>')}"
 <?php       if($table[swefminer_col_table_name]==$this->page->_GET(swefminer_get_table)): ?>
               open="open"
 <?php       endif; ?>
@@ -27,13 +27,13 @@
               <span>(<strong><?php echo $cn; ?></strong>/<?php echo $cs; ?>)</span>
               </summary>
               <div class="dashboard-layer dashboard-layer-1 swefminer-form-table">
-                <form class="list" method="post" action="?c=%5cSwef%5cSwefMiner&amp;o=<?php echo htmlentities ($this->page->_GET(SWEF_GET_OPTION)); ?>&amp;t=<?php echo htmlentities ($table[swefminer_col_table_name]); ?>" onsubmit="swef.wait()">
+                <form class="list" method="post" action="?c=%5cSwef%5cSwefMiner&amp;o=<?php echo htmlspecialchars ($this->page->_GET(SWEF_GET_OPTION)); ?>&amp;t=<?php echo htmlspecialchars ($table[swefminer_col_table_name]); ?>" onsubmit="swef.wait()">
                   <h1 onclick="this.parentElement.parentElement.parentElement.removeAttribute('open');return false" class="close">&#215;</h1>
                   <table>
                     <thead>
                       <tr>
                         <th class="table-title">
-                          <strong><?php echo htmlentities ($table[swefminer_col_table]); ?></strong>
+                          <strong><?php echo htmlspecialchars ($table[swefminer_col_table]); ?></strong>
                         </th>
                         <th>
                           <t en>Machine name</t>
@@ -55,13 +55,13 @@
                           <input type="submit" name="<?php echo swefminer_form_table_decouple; ?>" value="<t en>Decouple from model</t>" class="normal button" />
                         </td>
                         <td>
-                          <em><?php echo htmlentities ($table[swefminer_col_database]); ?></em>.<strong><?php echo htmlentities ($table[swefminer_col_table]); ?></strong>
+                          <em><?php echo htmlspecialchars ($table[swefminer_col_database]); ?></em>.<strong><?php echo htmlspecialchars ($table[swefminer_col_table]); ?></strong>
                         </td>
                         <td>
-                          <input class="normal" type="text" name="<?php echo swefminer_form_title; ?>" value="<?php echo htmlentities ($table[swefminer_col_title]); ?>" onkeyup="if(this.value=='<?php echo htmlentities ($table[swefminer_col_title]); ?>'){this.classList.remove('changed')}else{this.classList.add('changed')}this.title=this.value" onchange="if(this.value=='<?php echo htmlentities ($table[swefminer_col_title]); ?>'){this.classList.remove('changed')}else{this.classList.add('changed')}this.title=this.value" />
+                          <input class="normal" type="text" name="<?php echo swefminer_form_title; ?>" value="<?php echo htmlspecialchars ($table[swefminer_col_title]); ?>" onkeyup="if(this.value=='<?php echo htmlspecialchars ($table[swefminer_col_title]); ?>'){this.classList.remove('changed')}else{this.classList.add('changed')}this.title=this.value" onchange="if(this.value=='<?php echo htmlspecialchars ($table[swefminer_col_title]); ?>'){this.classList.remove('changed')}else{this.classList.add('changed')}this.title=this.value" />
                         </td>
                         <td>
-                          <input class="wide" type="text" name="<?php echo swefminer_form_description; ?>" value="<?php echo htmlentities ($table[swefminer_col_description]); ?>" onkeyup="if(this.value=='<?php echo htmlentities ($table[swefminer_col_description]); ?>'){this.classList.remove('changed')}else{this.classList.add('changed')}this.title=this.value" onchange="if(this.value=='<?php echo htmlentities ($table[swefminer_col_description]); ?>'){this.classList.remove('changed')}else{this.classList.add('changed')}this.title=this.value" />
+                          <input class="wide" type="text" name="<?php echo swefminer_form_description; ?>" value="<?php echo htmlspecialchars ($table[swefminer_col_description]); ?>" onkeyup="if(this.value=='<?php echo htmlspecialchars ($table[swefminer_col_description]); ?>'){this.classList.remove('changed')}else{this.classList.add('changed')}this.title=this.value" onchange="if(this.value=='<?php echo htmlspecialchars ($table[swefminer_col_description]); ?>'){this.classList.remove('changed')}else{this.classList.add('changed')}this.title=this.value" />
                         </td>
                         <td>
                           <input type="submit" name="<?php echo swefminer_form_table_update; ?>" value="<t en>Save</t>" class="button" />
@@ -69,8 +69,8 @@
                       </tr>
                     </tbody>
                   </table>
-                  <input type="hidden" name="<?php echo swefminer_form_table; ?>" value="<?php echo htmlentities ($table[swefminer_col_table]); ?>" />
-                  <input type="hidden" name="<?php echo swefminer_form_database; ?>" value="<?php echo htmlentities ($table[swefminer_col_database]); ?>" />
+                  <input type="hidden" name="<?php echo swefminer_form_table; ?>" value="<?php echo htmlspecialchars ($table[swefminer_col_table]); ?>" />
+                  <input type="hidden" name="<?php echo swefminer_form_database; ?>" value="<?php echo htmlspecialchars ($table[swefminer_col_database]); ?>" />
                 </form>
                 <div class="input">
                   &nbsp;
@@ -91,18 +91,18 @@
             </details>
           </td>
           <td>
-            <?php echo htmlentities ($table[swefminer_col_table_schema]); ?>.<strong><?php echo htmlentities ($table[swefminer_col_table_name]); ?></strong>
+            <?php echo htmlspecialchars ($table[swefminer_col_table_schema]); ?>.<strong><?php echo htmlspecialchars ($table[swefminer_col_table_name]); ?></strong>
           </td>
           <td>
-            <em><?php echo htmlentities ($table[swefminer_col_title]); ?></em>
+            <em><?php echo htmlspecialchars ($table[swefminer_col_title]); ?></em>
           </td>
           <td>
-            <em><?php echo htmlentities ($table[swefminer_col_description]); ?></em>
+            <em><?php echo htmlspecialchars ($table[swefminer_col_description]); ?></em>
           </td>
           <td>
             <details class="tooltip">
               <summary>?</summary>
-              <pre class="tooltip tooltip-top-right" onclick="this.parentElement.removeAttribute('open')"><?php echo htmlentities (print_r($table,SWEF_BOOL_TRUE)); ?></pre>
+              <pre class="tooltip tooltip-top-right" onclick="this.parentElement.removeAttribute('open')"><?php echo htmlspecialchars (print_r($table,SWEF_BOOL_TRUE)); ?></pre>
             </details>
           </td>
         </tr>
@@ -111,20 +111,20 @@
           <td>
             <details class="tooltip ">
               <summary>Couple</summary>
-              <div class="tooltip tooltip-top-left tooltip-small tooltip-form" method="post" action="<?php echo htmlentities($_SERVER['REQUEST_URI']); ?>">
+              <div class="tooltip tooltip-top-left tooltip-small tooltip-form" method="post" action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']); ?>">
                 <h1 onclick="this.parentElement.parentElement.removeAttribute('open');return false" class="close">&#215;</h1>
-                <form class="list" method="post" action="?c=%5cSwef%5cSwefMiner&amp;o=<?php echo htmlentities ($this->page->_GET(SWEF_GET_OPTION)); ?>&amp;t=<?php echo htmlentities ($table[swefminer_col_table_name]); ?>" onsubmit="swef.wait()">
+                <form class="list" method="post" action="?c=%5cSwef%5cSwefMiner&amp;o=<?php echo htmlspecialchars ($this->page->_GET(SWEF_GET_OPTION)); ?>&amp;t=<?php echo htmlspecialchars ($table[swefminer_col_table_name]); ?>" onsubmit="swef.wait()">
                   <div class="input allow-float">
-                    <input type="submit" name="<?php echo swefminer_form_table_couple; ?>" value="Couple <?php echo htmlentities ($table[swefminer_col_table_name]); ?> to model" />
+                    <input type="submit" name="<?php echo swefminer_form_table_couple; ?>" value="Couple <?php echo htmlspecialchars ($table[swefminer_col_table_name]); ?> to model" />
                   </div>
-                  <input type="hidden" name="<?php echo swefminer_form_database; ?>" value="<?php echo htmlentities ($table[swefminer_col_table_schema]); ?>" />
-                  <input type="hidden" name="<?php echo swefminer_form_table; ?>" value="<?php echo htmlentities ($table[swefminer_col_table_name]); ?>" />
+                  <input type="hidden" name="<?php echo swefminer_form_database; ?>" value="<?php echo htmlspecialchars ($table[swefminer_col_table_schema]); ?>" />
+                  <input type="hidden" name="<?php echo swefminer_form_table; ?>" value="<?php echo htmlspecialchars ($table[swefminer_col_table_name]); ?>" />
                 </form>
               </div>
             </details>
           </td>
           <td>
-            <?php echo htmlentities($table[swefminer_col_table_schema]); ?>.<?php echo htmlentities ($table[swefminer_col_table_name]).SWEF_STR__CRLF; ?>
+            <?php echo htmlspecialchars($table[swefminer_col_table_schema]); ?>.<?php echo htmlspecialchars ($table[swefminer_col_table_name]).SWEF_STR__CRLF; ?>
           </td>
           <td>
             &nbsp;
@@ -135,7 +135,7 @@
           <td>
             <details class="tooltip">
               <summary>?</summary>
-              <pre class="tooltip tooltip-top-right" onclick="this.parentElement.removeAttribute('open')"><?php echo htmlentities (print_r($table,SWEF_BOOL_TRUE)); ?></pre>
+              <pre class="tooltip tooltip-top-right" onclick="this.parentElement.removeAttribute('open')"><?php echo htmlspecialchars (print_r($table,SWEF_BOOL_TRUE)); ?></pre>
             </details>
           </td>
         </tr>

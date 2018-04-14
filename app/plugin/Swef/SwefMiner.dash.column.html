@@ -1,18 +1,18 @@
                     <tr>
                       <td>
 <?php           if(array_key_exists(swefminer_col_ignore,$column) && !$column[swefminer_col_ignore]): ?>
-                        <input type="submit" name="<?php echo swefminer_form_column_remove; ?>" form="<?php echo htmlentities ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name])); ?>" value="<t en>Decouple from model</t>" class="swefminer button normal" />
+                        <input type="submit" name="<?php echo swefminer_form_column_remove; ?>" form="<?php echo htmlspecialchars ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name])); ?>" value="<t en>Decouple from model</t>" class="swefminer button normal" />
 <?php           elseif(array_key_exists(swefminer_col_ignore,$column)): ?>
-                        <input type="submit" name="<?php echo swefminer_form_column_unremove; ?>" form="<?php echo htmlentities ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name])); ?>" value="<t en>Couple to model</t>" class="swefminer button normal" />
+                        <input type="submit" name="<?php echo swefminer_form_column_unremove; ?>" form="<?php echo htmlspecialchars ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name])); ?>" value="<t en>Couple to model</t>" class="swefminer button normal" />
 <?php           else: ?>
-                        <input type="submit" form="<?php echo htmlentities ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name])); ?>" value="<t en>Couple to model</t>" class="swefminer button normal" />
+                        <input type="submit" form="<?php echo htmlspecialchars ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name])); ?>" value="<t en>Couple to model</t>" class="swefminer button normal" />
 <?php           endif; ?>
                       </td>
                       <td>
 <?php           if(array_key_exists(swefminer_col_ignore,$column) && !$column[swefminer_col_ignore]): ?>
                         <details
                           class="tooltip"
-                          ontoggle="if(this.getAttribute('open')==null){history.replaceState(null,'<t en>User group</t>: <?php echo htmlentities ($usergroup[SWEF_COL_USERGROUP_NAME]); ?>','?c=%5cSwef%5cSwefMiner&amp;o=<?php echo htmlentities ($this->page->_GET(SWEF_GET_OPTION)); ?>&amp;t=<?php echo htmlentities ($table[swefminer_col_table_name]); ?>')}else{history.replaceState(null,'<t en>User group</t>: <?php echo htmlentities ($usergroup[SWEF_COL_USERGROUP_NAME]); ?>','?c=%5cSwef%5cSwefMiner&amp;o=<?php echo htmlentities ($this->page->_GET(SWEF_GET_OPTION)); ?>&amp;t=<?php echo htmlentities ($table[swefminer_col_table_name]); ?>&amp;cn=<?php echo htmlentities ($column[swefminer_col_column_name]); ?>')}"
+                          ontoggle="if(this.getAttribute('open')==null){history.replaceState(null,'<t en>User group</t>: <?php echo htmlspecialchars ($usergroup[SWEF_COL_USERGROUP_NAME]); ?>','?c=%5cSwef%5cSwefMiner&amp;o=<?php echo htmlspecialchars ($this->page->_GET(SWEF_GET_OPTION)); ?>&amp;t=<?php echo htmlspecialchars ($table[swefminer_col_table_name]); ?>')}else{history.replaceState(null,'<t en>User group</t>: <?php echo htmlspecialchars ($usergroup[SWEF_COL_USERGROUP_NAME]); ?>','?c=%5cSwef%5cSwefMiner&amp;o=<?php echo htmlspecialchars ($this->page->_GET(SWEF_GET_OPTION)); ?>&amp;t=<?php echo htmlspecialchars ($table[swefminer_col_table_name]); ?>&amp;cn=<?php echo htmlspecialchars ($column[swefminer_col_column_name]); ?>')}"
 <?php             if($column[swefminer_col_column_name]==$this->page->_GET(swefminer_get_column)): ?>
                           open="open"
 <?php             endif; ?>
@@ -30,36 +30,42 @@
                       </td>
                       <td>
 <?php           if(array_key_exists(swefminer_col_ignore,$column) && !$column[swefminer_col_ignore]): ?>
-                        <strong><?php echo htmlentities ($column[swefminer_col_column_name]); ?></strong>
+                        <strong><?php echo htmlspecialchars ($column[swefminer_col_column_name]); ?></strong>
 <?php           else: ?>
-                        <?php echo htmlentities ($column[swefminer_col_column_name]); ?>
+                        <?php echo htmlspecialchars ($column[swefminer_col_column_name]); ?>
 <?php           endif; ?>
                       </td>
                       <td class="swefminer-foreign">
 <?php           if($column[swefminer_col_ref_column_name]): ?>
-                        <strong>-&gt;</strong> <em><?php echo htmlentities ($column[swefminer_col_ref_table_name]); ?></em><strong>.<?php echo htmlentities ($column[swefminer_col_ref_column_name]); ?></strong>
+                        <strong>-&gt;</strong> <em><?php echo htmlspecialchars ($column[swefminer_col_ref_table_name]); ?></em><strong>.<?php echo htmlspecialchars ($column[swefminer_col_ref_column_name]); ?></strong>
 <?php           else: ?>
                         &nbsp;
 <?php           endif; ?>
                       </td>
                       <td class="center">
                         <input
-                          form="<?php echo htmlentities ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name])); ?>"
-                          name="<?php echo htmlentities (swefminer_col_describes_record); ?>"
+                          form="<?php echo htmlspecialchars ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name])); ?>"
+                          name="<?php echo htmlspecialchars (swefminer_col_describes_record); ?>"
                           type="checkbox"
 <?php           if(array_key_exists(swefminer_col_describes_record,$column) && $column[swefminer_col_describes_record]): ?>
                           checked="checked"
+<?php           endif; ?>
+<?php           if(!array_key_exists(swefminer_col_ignore,$column) || $column[swefminer_col_ignore]): ?>
+                          disabled="disabled"
 <?php           endif; ?>
                           onchange="swef.wait();this.form.submit()"
                         />
                       </td>
                       <td class="center">
                         <input
-                          form="<?php echo htmlentities ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name])); ?>"
-                          name="<?php echo htmlentities (swefminer_col_trashes_record); ?>"
+                          form="<?php echo htmlspecialchars ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name])); ?>"
+                          name="<?php echo htmlspecialchars (swefminer_col_trashes_record); ?>"
                           type="checkbox"
 <?php           if(array_key_exists(swefminer_col_trashes_record,$column) && $column[swefminer_col_trashes_record]): ?>
                           checked="checked"
+<?php           endif; ?>
+<?php           if(!array_key_exists(swefminer_col_ignore,$column) || $column[swefminer_col_ignore]): ?>
+                          disabled="disabled"
 <?php           endif; ?>
                           onchange="swef.wait();this.form.submit()"
                         />
@@ -73,79 +79,97 @@
                       </td>
                       <td class="center">
                         <input
-                          form="<?php echo htmlentities ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name])); ?>"
-                          name="<?php echo htmlentities (swefminer_col_is_uuid); ?>"
+                          form="<?php echo htmlspecialchars ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name])); ?>"
+                          name="<?php echo htmlspecialchars (swefminer_col_is_uuid); ?>"
                           type="checkbox"
 <?php           if(array_key_exists(swefminer_col_is_uuid,$column) && $column[swefminer_col_is_uuid]): ?>
                           checked="checked"
 <?php           endif; ?>
-                          onchange="swef.wait();this.form.submit()"
-                        />
-                      </td>
-                      <td class="center">
-                        <input
-                          form="<?php echo htmlentities ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name])); ?>"
-                          name="<?php echo htmlentities (swefminer_col_is_edited_by); ?>"
-                          type="checkbox"
-<?php           if(array_key_exists(swefminer_col_is_edited_by,$column) && $column[swefminer_col_is_edited_by]): ?>
-                          checked="checked"
+<?php           if(!array_key_exists(swefminer_col_ignore,$column) || $column[swefminer_col_ignore]): ?>
+                          disabled="disabled"
 <?php           endif; ?>
                           onchange="swef.wait();this.form.submit()"
                         />
                       </td>
                       <td class="center">
                         <input
-                          form="<?php echo htmlentities ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name])); ?>"
-                          name="<?php echo htmlentities (swefminer_col_is_edited); ?>"
+                          form="<?php echo htmlspecialchars ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name])); ?>"
+                          name="<?php echo htmlspecialchars (swefminer_col_is_edited_by); ?>"
+                          type="checkbox"
+<?php           if(array_key_exists(swefminer_col_is_edited_by,$column) && $column[swefminer_col_is_edited_by]): ?>
+                          checked="checked"
+<?php           endif; ?>
+<?php           if(!array_key_exists(swefminer_col_ignore,$column) || $column[swefminer_col_ignore]): ?>
+                          disabled="disabled"
+<?php           endif; ?>
+                          onchange="swef.wait();this.form.submit()"
+                        />
+                      </td>
+                      <td class="center">
+                        <input
+                          form="<?php echo htmlspecialchars ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name])); ?>"
+                          name="<?php echo htmlspecialchars (swefminer_col_is_edited); ?>"
                           type="checkbox"
 <?php           if(array_key_exists(swefminer_col_is_edited,$column) && $column[swefminer_col_is_edited]): ?>
                           checked="checked"
+<?php           endif; ?>
+<?php           if(!array_key_exists(swefminer_col_ignore,$column) || $column[swefminer_col_ignore]): ?>
+                          disabled="disabled"
 <?php           endif; ?>
                           onchange="swef.wait();this.form.submit()"
                         />
                       </td>
                       <td>
                         <input
-                          form="<?php echo htmlentities ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name])); ?>"
-                          name="<?php echo htmlentities (swefminer_form_heading); ?>"
+                          form="<?php echo htmlspecialchars ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name])); ?>"
+                          name="<?php echo htmlspecialchars (swefminer_form_heading); ?>"
                           type="text"
                           placeholder="<t en>Column heading</t>"
 <?php           if(array_key_exists(swefminer_col_heading,$column)): ?>
-                          value="<?php echo htmlentities ($column[swefminer_col_heading]); ?>"
-                          title="<?php echo htmlentities ($column[swefminer_col_heading]); ?>"
+                          value="<?php echo htmlspecialchars ($column[swefminer_col_heading]); ?>"
+                          title="<?php echo htmlspecialchars ($column[swefminer_col_heading]); ?>"
 <?php           else: ?>
                           value=""
                           title=""
 <?php           endif; ?>
-                          onkeyup="if(this.value=='<?php echo htmlentities ($column[swefminer_col_heading]); ?>'){this.classList.remove('changed')}else{this.classList.add('changed')}this.title=this.value"
-                          onchange="if(this.value=='<?php echo htmlentities ($column[swefminer_col_heading]); ?>'){this.classList.remove('changed')}else{this.classList.add('changed')}this.title=this.value"
+<?php           if(!array_key_exists(swefminer_col_ignore,$column) || $column[swefminer_col_ignore]): ?>
+                          disabled="disabled"
+<?php           endif; ?>
+                          onkeyup="if(this.value=='<?php echo htmlspecialchars ($column[swefminer_col_heading]); ?>'){this.classList.remove('changed')}else{this.classList.add('changed')}this.title=this.value"
+                          onchange="if(this.value=='<?php echo htmlspecialchars ($column[swefminer_col_heading]); ?>'){this.classList.remove('changed')}else{this.classList.add('changed')}this.title=this.value"
                           class="small"
                         />
                       </td>
                       <td>
                         <input
-                          form="<?php echo htmlentities ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name])); ?>"
-                          name="<?php echo htmlentities (swefminer_form_hint); ?>"
+                          form="<?php echo htmlspecialchars ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name])); ?>"
+                          name="<?php echo htmlspecialchars (swefminer_form_hint); ?>"
                           type="text"
                           placeholder="<t en>More information</t>"
 <?php           if(array_key_exists(swefminer_col_hint,$column)): ?>
-                          value="<?php echo htmlentities ($column[swefminer_col_hint]); ?>"
-                          title="<?php echo htmlentities ($column[swefminer_col_hint]); ?>"
+                          value="<?php echo htmlspecialchars ($column[swefminer_col_hint]); ?>"
+                          title="<?php echo htmlspecialchars ($column[swefminer_col_hint]); ?>"
 <?php           else: ?>
                           value=""
                           title=""
 <?php           endif; ?>
-                          onkeyup="if(this.value=='<?php echo htmlentities ($column[swefminer_col_hint]); ?>'){this.classList.remove('changed')}else{this.classList.add('changed')}this.title=this.value"
-                          onchange="if(this.value=='<?php echo htmlentities ($column[swefminer_col_hint]); ?>'){this.classList.remove('changed')}else{this.classList.add('changed')}this.title=this.value"
+<?php           if(!array_key_exists(swefminer_col_ignore,$column) || $column[swefminer_col_ignore]): ?>
+                          disabled="disabled"
+<?php           endif; ?>
+                          onkeyup="if(this.value=='<?php echo htmlspecialchars ($column[swefminer_col_hint]); ?>'){this.classList.remove('changed')}else{this.classList.add('changed')}this.title=this.value"
+                          onchange="if(this.value=='<?php echo htmlspecialchars ($column[swefminer_col_hint]); ?>'){this.classList.remove('changed')}else{this.classList.add('changed')}this.title=this.value"
                           class="tiny"
                         />
                       </td>
                       <td>
                         <input
-                          form="<?php echo htmlentities ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name])); ?>"
+                          form="<?php echo htmlspecialchars ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name])); ?>"
                           name="save"
                           type="submit"
                           value="<t en>Save</t>"
+<?php           if(!array_key_exists(swefminer_col_ignore,$column) || $column[swefminer_col_ignore]): ?>
+                          disabled="disabled"
+<?php           endif; ?>
                         />
                       </td>
                     </tr>

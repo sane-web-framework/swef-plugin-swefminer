@@ -98,11 +98,11 @@
                 </table>
 <?php       foreach($this->columns as $column): ?>
 <?php         if($column[swefminer_col_table_name]==$table[swefminer_col_table_name]): ?>
-                <form id="<?php echo htmlentities ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name])); ?>" action="?c=%5cSwef%5cSwefMiner&amp;o=<?php echo htmlentities ($this->page->_GET(SWEF_GET_OPTION)); ?>&amp;t=<?php echo htmlentities ($column[swefminer_col_table_name]); ?>&amp;cn=<?php echo htmlentities ($column[swefminer_col_column_name]); ?>" method="post" onsubmit="swef.wait()">
+                <form id="<?php echo htmlspecialchars ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name])); ?>" action="?c=%5cSwef%5cSwefMiner&amp;o=<?php echo htmlspecialchars ($this->page->_GET(SWEF_GET_OPTION)); ?>&amp;t=<?php echo htmlspecialchars ($column[swefminer_col_table_name]); ?>&amp;cn=<?php echo htmlspecialchars ($column[swefminer_col_column_name]); ?>" method="post" onsubmit="swef.wait()">
                   <input type="hidden" name="<?php echo swefminer_form_column_update; ?>" value="1" />
-                  <input type="hidden" name="<?php echo swefminer_form_column; ?>" value="<?php echo htmlentities ($column[swefminer_col_column_name]); ?>" />
-                  <input type="hidden" name="<?php echo swefminer_form_table; ?>" value="<?php echo htmlentities ($column[swefminer_col_table_name]); ?>" />
-                  <input type="hidden" name="<?php echo swefminer_form_database; ?>" value="<?php echo htmlentities ($column[swefminer_col_table_schema]); ?>" />
+                  <input type="hidden" name="<?php echo swefminer_form_column; ?>" value="<?php echo htmlspecialchars ($column[swefminer_col_column_name]); ?>" />
+                  <input type="hidden" name="<?php echo swefminer_form_table; ?>" value="<?php echo htmlspecialchars ($column[swefminer_col_table_name]); ?>" />
+                  <input type="hidden" name="<?php echo swefminer_form_database; ?>" value="<?php echo htmlspecialchars ($column[swefminer_col_table_schema]); ?>" />
                 </form>
 <?php         endif; ?>
 <?php       endforeach; ?>

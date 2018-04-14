@@ -25,7 +25,7 @@ else {
   <h2>Dashboard for SwefMiner</h2>
 
   <form class="options" method="get" action="?">
-    <input type="hidden" name="<?php echo htmlentities (SWEF_GET_CLASSNAME); ?>" value="\Swef\SwefMiner" />
+    <input type="hidden" name="<?php echo htmlspecialchars (SWEF_GET_CLASSNAME); ?>" value="\Swef\SwefMiner" />
 <?php $this->page->pull ('global.form.select.auto_submit',SWEF_GET_OPTION,$option,'options',$options); ?>
   </form>
 

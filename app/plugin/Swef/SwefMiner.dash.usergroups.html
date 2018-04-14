@@ -6,15 +6,15 @@
         <tr>
           <td>
             <details
-              ontoggle="if(this.getAttribute('open')==null){history.replaceState(null,'<t en>SwefMiner home</t>','?c=%5cSwef%5cSwefMiner&amp;o=<?php echo htmlentities ($this->page->_GET(SWEF_GET_OPTION)); ?>')}else{history.replaceState(null,'<t en>User group</t>: <?php echo htmlentities ($usergroup[SWEF_COL_USERGROUP_NAME]); ?>','?c=%5cSwef%5cSwefMiner&amp;o=<?php echo htmlentities ($this->page->_GET(SWEF_GET_OPTION)); ?>&amp;ug=<?php echo htmlentities ($usergroup[SWEF_COL_USERGROUP]); ?>')}"
+              ontoggle="if(this.getAttribute('open')==null){history.replaceState(null,'<t en>SwefMiner home</t>','?c=%5cSwef%5cSwefMiner&amp;o=<?php echo htmlspecialchars ($this->page->_GET(SWEF_GET_OPTION)); ?>')}else{history.replaceState(null,'<t en>User group</t>: <?php echo htmlspecialchars ($usergroup[SWEF_COL_USERGROUP_NAME]); ?>','?c=%5cSwef%5cSwefMiner&amp;o=<?php echo htmlspecialchars ($this->page->_GET(SWEF_GET_OPTION)); ?>&amp;ug=<?php echo htmlspecialchars ($usergroup[SWEF_COL_USERGROUP]); ?>')}"
 <?php if($usergroup[SWEF_COL_USERGROUP]==$this->page->_GET(swefminer_get_usergroup)): ?>
               open="open"
 <?php endif; ?>
             >
-              <summary><strong><?php echo htmlentities ($usergroup[SWEF_COL_USERGROUP_NAME]); ?> <t en>may</t></strong> ...</summary>
+              <summary><strong><?php echo htmlspecialchars ($usergroup[SWEF_COL_USERGROUP_NAME]); ?> <t en>may</t></strong> ...</summary>
               <div class="dashboard-layer dashboard-layer-2">
                 <h1 onclick="this.parentElement.parentElement.removeAttribute('open');return false" class="close">&#215;</h1>
-                <h3><?php echo htmlentities ($usergroup[SWEF_COL_USERGROUP_NAME]); ?> <t en>may</t> ...</h3>
+                <h3><?php echo htmlspecialchars ($usergroup[SWEF_COL_USERGROUP_NAME]); ?> <t en>may</t> ...</h3>
                 <table class="float-right">
                   <thead>
                   	<tr>
@@ -28,14 +28,14 @@
 <?php     foreach($tables as $table): ?>
 <?php       if(array_key_exists(swefminer_col_ignore,$table) && !$table[swefminer_col_ignore]): ?>
 <?php         $count++; ?>
-                    <tr title="<?php echo htmlentities ($table[swefminer_col_database]); ?>.<?php echo htmlentities ($table[swefminer_col_table]); ?> - <?php echo htmlentities ($table[swefminer_col_description]); ?>">
+                    <tr title="<?php echo htmlspecialchars ($table[swefminer_col_database]); ?>.<?php echo htmlspecialchars ($table[swefminer_col_table]); ?> - <?php echo htmlspecialchars ($table[swefminer_col_description]); ?>">
                       <td>
-                        <label><strong><em><?php echo htmlentities ($table[swefminer_col_title]); ?></em></strong></label>
+                        <label><strong><em><?php echo htmlspecialchars ($table[swefminer_col_title]); ?></em></strong></label>
                       </td>
                       <td class="warn-2 center">
-                        <form action="?c=%5cSwef%5cSwefMiner&amp;o=<?php echo htmlentities ($this->page->_GET(SWEF_GET_OPTION)); ?>&amp;ug=<?php echo htmlentities ($usergroup[SWEF_COL_USERGROUP]); ?>" method="post">
+                        <form action="?c=%5cSwef%5cSwefMiner&amp;o=<?php echo htmlspecialchars ($this->page->_GET(SWEF_GET_OPTION)); ?>&amp;ug=<?php echo htmlspecialchars ($usergroup[SWEF_COL_USERGROUP]); ?>" method="post">
                           <input
-                            name="<?php echo htmlentities (swefminer_form_insert); ?>"
+                            name="<?php echo htmlspecialchars (swefminer_form_insert); ?>"
                             type="checkbox"
                             onchange="swef.wait();this.form.submit()"
 <?php         if(in_array($usergroup[SWEF_COL_USERGROUP],$table[swefminer_col_inserters])): ?>
@@ -43,15 +43,15 @@
 <?php         endif; ?>
                           />
                           <input type="hidden" name="<?php echo swefminer_form_insert_update; ?>" value="1" />
-                          <input type="hidden" name="<?php echo swefminer_form_usergroup; ?>" value="<?php echo htmlentities ($usergroup[SWEF_COL_USERGROUP]); ?>" />
-                          <input type="hidden" name="<?php echo swefminer_form_table; ?>" value="<?php echo htmlentities ($table[swefminer_col_table]); ?>" />
-                          <input type="hidden" name="<?php echo swefminer_form_database; ?>" value="<?php echo htmlentities ($table[swefminer_col_database]); ?>" />
+                          <input type="hidden" name="<?php echo swefminer_form_usergroup; ?>" value="<?php echo htmlspecialchars ($usergroup[SWEF_COL_USERGROUP]); ?>" />
+                          <input type="hidden" name="<?php echo swefminer_form_table; ?>" value="<?php echo htmlspecialchars ($table[swefminer_col_table]); ?>" />
+                          <input type="hidden" name="<?php echo swefminer_form_database; ?>" value="<?php echo htmlspecialchars ($table[swefminer_col_database]); ?>" />
                         </form>
                       </td>
                       <td class="warn-4 center">
-                        <form action="?c=%5cSwef%5cSwefMiner&amp;o=<?php echo htmlentities ($this->page->_GET(SWEF_GET_OPTION)); ?>&amp;ug=<?php echo htmlentities ($usergroup[SWEF_COL_USERGROUP]); ?>" method="post">
+                        <form action="?c=%5cSwef%5cSwefMiner&amp;o=<?php echo htmlspecialchars ($this->page->_GET(SWEF_GET_OPTION)); ?>&amp;ug=<?php echo htmlspecialchars ($usergroup[SWEF_COL_USERGROUP]); ?>" method="post">
                           <input
-                            name="<?php echo htmlentities (swefminer_form_delete); ?>"
+                            name="<?php echo htmlspecialchars (swefminer_form_delete); ?>"
                             type="checkbox"
                             onchange="swef.wait();this.form.submit()"
 <?php         if(in_array($usergroup[SWEF_COL_USERGROUP],$table[swefminer_col_deleters])): ?>
@@ -59,9 +59,9 @@
 <?php         endif; ?>
                         />
                           <input type="hidden" name="<?php echo swefminer_form_delete_update; ?>" value="1" />
-                          <input type="hidden" name="<?php echo swefminer_form_usergroup; ?>" value="<?php echo htmlentities ($usergroup[SWEF_COL_USERGROUP]); ?>" />
-                          <input type="hidden" name="<?php echo swefminer_form_table; ?>" value="<?php echo htmlentities ($table[swefminer_col_table]); ?>" />
-                          <input type="hidden" name="<?php echo swefminer_form_database; ?>" value="<?php echo htmlentities ($table[swefminer_col_database]); ?>" />
+                          <input type="hidden" name="<?php echo swefminer_form_usergroup; ?>" value="<?php echo htmlspecialchars ($usergroup[SWEF_COL_USERGROUP]); ?>" />
+                          <input type="hidden" name="<?php echo swefminer_form_table; ?>" value="<?php echo htmlspecialchars ($table[swefminer_col_table]); ?>" />
+                          <input type="hidden" name="<?php echo swefminer_form_database; ?>" value="<?php echo htmlspecialchars ($table[swefminer_col_database]); ?>" />
                         </form>
                       </td>
                     </tr>
@@ -89,14 +89,14 @@
 <?php     foreach($this->columns as $column): ?>
 <?php       if(array_key_exists(swefminer_col_ignore,$column) && !$column[swefminer_col_ignore]): ?>
 <?php         $count++; ?>
-                    <tr title="<?php echo htmlentities ($column[swefminer_col_database]); ?>.<?php echo htmlentities ($column[swefminer_col_table]); ?>.<?php echo htmlentities ($column[swefminer_col_column]); ?> - <?php echo htmlentities ($column[swefminer_col_hint]); ?>">
+                    <tr title="<?php echo htmlspecialchars ($column[swefminer_col_database]); ?>.<?php echo htmlspecialchars ($column[swefminer_col_table]); ?>.<?php echo htmlspecialchars ($column[swefminer_col_column]); ?> - <?php echo htmlspecialchars ($column[swefminer_col_hint]); ?>">
                       <td>
-                        <label><em><?php echo htmlentities ($column[swefminer_col_title]); ?></em> - <strong><?php echo htmlentities ($column[swefminer_col_heading]); ?></strong></label>
+                        <label><em><?php echo htmlspecialchars ($column[swefminer_col_title]); ?></em> - <strong><?php echo htmlspecialchars ($column[swefminer_col_heading]); ?></strong></label>
                       </td>
                       <td class="warn-1 center">
-                        <form action="?c=%5cSwef%5cSwefMiner&amp;o=<?php echo htmlentities ($this->page->_GET(SWEF_GET_OPTION)); ?>&amp;ug=<?php echo htmlentities ($usergroup[SWEF_COL_USERGROUP]); ?>" method="post">
+                        <form action="?c=%5cSwef%5cSwefMiner&amp;o=<?php echo htmlspecialchars ($this->page->_GET(SWEF_GET_OPTION)); ?>&amp;ug=<?php echo htmlspecialchars ($usergroup[SWEF_COL_USERGROUP]); ?>" method="post">
                           <input
-                            name="<?php echo htmlentities (swefminer_form_select); ?>"
+                            name="<?php echo htmlspecialchars (swefminer_form_select); ?>"
                             type="checkbox"
                             onchange="swef.wait();this.form.submit()"
 <?php         if(in_array($usergroup[SWEF_COL_USERGROUP],$column[swefminer_col_selectors])): ?>
@@ -104,16 +104,16 @@
 <?php         endif; ?>
                           />
                           <input type="hidden" name="<?php echo swefminer_form_select_update; ?>" value="1" />
-                          <input type="hidden" name="<?php echo swefminer_form_usergroup; ?>" value="<?php echo htmlentities ($usergroup[SWEF_COL_USERGROUP]); ?>" />
-                          <input type="hidden" name="<?php echo swefminer_form_column; ?>" value="<?php echo htmlentities ($column[swefminer_col_column_name]); ?>" />
-                          <input type="hidden" name="<?php echo swefminer_form_table; ?>" value="<?php echo htmlentities ($column[swefminer_col_table_name]); ?>" />
-                          <input type="hidden" name="<?php echo swefminer_form_database; ?>" value="<?php echo htmlentities ($column[swefminer_col_table_schema]); ?>" />
+                          <input type="hidden" name="<?php echo swefminer_form_usergroup; ?>" value="<?php echo htmlspecialchars ($usergroup[SWEF_COL_USERGROUP]); ?>" />
+                          <input type="hidden" name="<?php echo swefminer_form_column; ?>" value="<?php echo htmlspecialchars ($column[swefminer_col_column_name]); ?>" />
+                          <input type="hidden" name="<?php echo swefminer_form_table; ?>" value="<?php echo htmlspecialchars ($column[swefminer_col_table_name]); ?>" />
+                          <input type="hidden" name="<?php echo swefminer_form_database; ?>" value="<?php echo htmlspecialchars ($column[swefminer_col_table_schema]); ?>" />
                         </form>
                       </td>
                       <td class="warn-3 center">
-                        <form action="?c=%5cSwef%5cSwefMiner&amp;o=<?php echo htmlentities ($this->page->_GET(SWEF_GET_OPTION)); ?>&amp;ug=<?php echo htmlentities ($usergroup[SWEF_COL_USERGROUP]); ?>" method="post">
+                        <form action="?c=%5cSwef%5cSwefMiner&amp;o=<?php echo htmlspecialchars ($this->page->_GET(SWEF_GET_OPTION)); ?>&amp;ug=<?php echo htmlspecialchars ($usergroup[SWEF_COL_USERGROUP]); ?>" method="post">
                           <input
-                            name="<?php echo htmlentities (swefminer_form_update); ?>"
+                            name="<?php echo htmlspecialchars (swefminer_form_update); ?>"
                             type="checkbox"
                             onchange="swef.wait();this.form.submit()"
 <?php         if(in_array($usergroup[SWEF_COL_USERGROUP],$column[swefminer_col_updaters])): ?>
@@ -121,10 +121,10 @@
 <?php         endif; ?>
                           />
                           <input type="hidden" name="<?php echo swefminer_form_update_update; ?>" value="1" />
-                          <input type="hidden" name="<?php echo swefminer_form_usergroup; ?>" value="<?php echo htmlentities ($usergroup[SWEF_COL_USERGROUP]); ?>" />
-                          <input type="hidden" name="<?php echo swefminer_form_column; ?>" value="<?php echo htmlentities ($column[swefminer_col_column_name]); ?>" />
-                          <input type="hidden" name="<?php echo swefminer_form_table; ?>" value="<?php echo htmlentities ($column[swefminer_col_table_name]); ?>" />
-                          <input type="hidden" name="<?php echo swefminer_form_database; ?>" value="<?php echo htmlentities ($column[swefminer_col_table_schema]); ?>" />
+                          <input type="hidden" name="<?php echo swefminer_form_usergroup; ?>" value="<?php echo htmlspecialchars ($usergroup[SWEF_COL_USERGROUP]); ?>" />
+                          <input type="hidden" name="<?php echo swefminer_form_column; ?>" value="<?php echo htmlspecialchars ($column[swefminer_col_column_name]); ?>" />
+                          <input type="hidden" name="<?php echo swefminer_form_table; ?>" value="<?php echo htmlspecialchars ($column[swefminer_col_table_name]); ?>" />
+                          <input type="hidden" name="<?php echo swefminer_form_database; ?>" value="<?php echo htmlspecialchars ($column[swefminer_col_table_schema]); ?>" />
                         </form>
                       </td>
                     </tr>
