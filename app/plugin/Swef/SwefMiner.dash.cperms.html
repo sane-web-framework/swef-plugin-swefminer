@@ -7,7 +7,7 @@
                             <div class="input warn-1">
                               <label>&nbsp;</label>
                               <input
-                                id="<?php echo htmlspecialchars ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name],$ug[SWEF_COL_USERGROUP],swefminer_form_selector)); ?>"
+                                id="<?php echo htmlspecialchars ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name],$ug[SWEF_COL_USERGROUP],swefminer_form_select)); ?>"
                                 form="<?php echo htmlspecialchars ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name])); ?>"
                                 name="<?php echo htmlspecialchars (swefminer_form_selector_pfx.$ug[SWEF_COL_USERGROUP]); ?>"
                                 type="checkbox"
@@ -16,7 +16,7 @@
 <?php         endif; ?>
                                 onchange="swef.wait();this.form.submit()"
                               />
-                              <label for="<?php echo htmlspecialchars ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name],$ug[SWEF_COL_USERGROUP],swefminer_form_selector)); ?>"><?php echo htmlspecialchars ($ug[SWEF_COL_USERGROUP_NAME]); ?></label>
+                              <label for="<?php echo htmlspecialchars ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name],$ug[SWEF_COL_USERGROUP],swefminer_form_select)); ?>"><?php echo htmlspecialchars ($ug[SWEF_COL_USERGROUP_NAME]); ?></label>
                             </div>
 <?php       endforeach; ?>
                             <div class="input warn-3">
@@ -26,7 +26,7 @@
                             <div class="input warn-3">
                               <label>&nbsp;</label>
                               <input
-                                id="<?php echo htmlspecialchars ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name],$ug[SWEF_COL_USERGROUP],swefminer_form_updater)); ?>"
+                                id="<?php echo htmlspecialchars ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name],$ug[SWEF_COL_USERGROUP],swefminer_form_update)); ?>"
                                 form="<?php echo htmlspecialchars ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name])); ?>"
                                 name="<?php echo htmlspecialchars (swefminer_form_updater_pfx.$ug[SWEF_COL_USERGROUP]); ?>"
                                 type="checkbox"
@@ -35,6 +35,6 @@
 <?php         endif; ?>
                                 onchange="swef.wait();this.form.submit()"
                               />
-                              <label for="<?php echo htmlspecialchars ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name],$ug[SWEF_COL_USERGROUP],swefminer_form_updater)); ?>"><?php echo htmlspecialchars ($ug[SWEF_COL_USERGROUP_NAME]); ?></label>
+                              <label for="<?php echo htmlspecialchars ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name],$ug[SWEF_COL_USERGROUP],swefminer_form_update)); ?>"><?php echo htmlspecialchars ($ug[SWEF_COL_USERGROUP_NAME]); ?></label>
                             </div>
 <?php       endforeach; ?>
