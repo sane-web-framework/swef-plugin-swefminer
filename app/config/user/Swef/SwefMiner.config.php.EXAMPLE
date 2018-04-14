@@ -1,7 +1,8 @@
 <?php
 
 // Data browser
-define ( 'swefminer_uris',                  'example:/miner-example;example2:/miner-example2'               );
+//define ( 'swefminer_uris_dashboard',        'example:/miner-example;example2:/miner-example2'             );
+//define ( 'swefminer_uris_public',           'example:/miner-example;example2:/miner-example2'             );
 
 
 // Data model called "example"
