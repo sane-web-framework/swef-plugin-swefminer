@@ -14,7 +14,7 @@
 <?php         if(in_array($ug[SWEF_COL_USERGROUP],$column[swefminer_col_selectors])): ?>
                                 checked="checked"
 <?php         endif; ?>
-                                onchange="this.form.submit()"
+                                onchange="swef.wait();this.form.submit()"
                               />
                               <label for="<?php echo htmlentities ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name],$ug[SWEF_COL_USERGROUP],swefminer_form_selector)); ?>"><?php echo htmlentities ($ug[SWEF_COL_USERGROUP_NAME]); ?></label>
                             </div>
@@ -33,7 +33,7 @@
 <?php         if(in_array($ug[SWEF_COL_USERGROUP],$column[swefminer_col_updaters])): ?>
                                 checked="checked"
 <?php         endif; ?>
-                                onchange="this.form.submit()"
+                                onchange="swef.wait();this.form.submit()"
                               />
                               <label for="<?php echo htmlentities ($this->formID($column[swefminer_col_table_schema],$column[swefminer_col_table_name],$column[swefminer_col_column_name],$ug[SWEF_COL_USERGROUP],swefminer_form_updater)); ?>"><?php echo htmlentities ($ug[SWEF_COL_USERGROUP_NAME]); ?></label>
                             </div>

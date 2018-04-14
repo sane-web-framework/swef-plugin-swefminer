@@ -6,35 +6,43 @@ define ( 'swefminer_limit_rows',             50                                 
 
 
 // Form field names
-define ( 'swefminer_form_column',            'swefminer-column'                                     );
-define ( 'swefminer_form_column_pfx',        'swefminer-column-'                                    );
-define ( 'swefminer_form_column_remove',     'swefminer-column-remove'                              );
-define ( 'swefminer_form_column_unremove',   'swefminer-column-unremove'                            );
-define ( 'swefminer_form_column_update',     'swefminer-column-update'                              );
-define ( 'swefminer_form_columns',           'swefminer-columns'                                    );
-define ( 'swefminer_form_couple',            'swefminer-couple'                                     );
-define ( 'swefminer_form_database',          'swefminer-database'                                   );
-define ( 'swefminer_form_deleter',           'swefminer-deleter'                                    );
-define ( 'swefminer_form_deleter_pfx',       'swefminer-deleter-'                                   );
-define ( 'swefminer_form_description',       'swefminer-description'                                );
-define ( 'swefminer_form_heading',           'swefminer-heading'                                    );
-define ( 'swefminer_form_hint',              'swefminer-hint'                                       );
-define ( 'swefminer_form_inserter',          'swefminer-inserter'                                   );
-define ( 'swefminer_form_inserter_pfx',      'swefminer-inserter-'                                  );
-define ( 'swefminer_form_pfx',               'swefminer-form-'                                      );
-define ( 'swefminer_form_posted',            'swefminer-posted'                                     );
-define ( 'swefminer_form_remove',            'swefminer-remove'                                     );
-define ( 'swefminer_form_selector',          'swefminer-selector'                                   );
-define ( 'swefminer_form_selector_pfx',      'swefminer-selector-'                                  );
-define ( 'swefminer_form_table',             'swefminer-table'                                      );
-define ( 'swefminer_form_table_pfx',         'swefminer-table-'                                     );
-define ( 'swefminer_form_table_update',      'swefminer-table-update'                               );
-define ( 'swefminer_form_table_usergroup',   'swefminer-table-usergroup'                            );
-define ( 'swefminer_form_title',             'swefminer-title'                                      );
-define ( 'swefminer_form_updater',           'swefminer-updater'                                    );
-define ( 'swefminer_form_updater_pfx',       'swefminer-updater-'                                   );
-define ( 'swefminer_form_usergroup_column',  'swefminer-usergroup-column'                           );
-define ( 'swefminer_form_usergroup_table',   'swefminer-usergroup-table'                            );
+define ( 'swefminer_form_column',               'swefminer-column'                                  );
+define ( 'swefminer_form_column_pfx',           'swefminer-column-'                                 );
+define ( 'swefminer_form_column_remove',        'swefminer-column-remove'                           );
+define ( 'swefminer_form_column_unremove',      'swefminer-column-unremove'                         );
+define ( 'swefminer_form_column_update',        'swefminer-column-update'                           );
+define ( 'swefminer_form_columns',              'swefminer-columns'                                 );
+define ( 'swefminer_form_database',             'swefminer-database'                                );
+define ( 'swefminer_form_delete',               'swefminer-delete'                                  );
+define ( 'swefminer_form_deleter',              'swefminer-deleter'                                 );
+define ( 'swefminer_form_deleter_pfx',          'swefminer-deleter-'                                );
+define ( 'swefminer_form_description',          'swefminer-description'                             );
+define ( 'swefminer_form_heading',              'swefminer-heading'                                 );
+define ( 'swefminer_form_hint',                 'swefminer-hint'                                    );
+define ( 'swefminer_form_insert',               'swefminer-insert'                                  );
+define ( 'swefminer_form_inserter',             'swefminer-inserter'                                );
+define ( 'swefminer_form_inserter_pfx',         'swefminer-inserter-'                               );
+define ( 'swefminer_form_pfx',                  'swefminer-form-'                                   );
+define ( 'swefminer_form_posted',               'swefminer-posted'                                  );
+define ( 'swefminer_form_selector',             'swefminer-selector'                                );
+define ( 'swefminer_form_selector_pfx',         'swefminer-selector-'                               );
+define ( 'swefminer_form_table',                'swefminer-table'                                   );
+define ( 'swefminer_form_table_couple',         'swefminer-table-couple'                            );
+define ( 'swefminer_form_table_decouple',       'swefminer-table-decouple'                          );
+define ( 'swefminer_form_delete_update',        'swefminer-delete-update'                           );
+define ( 'swefminer_form_insert_update',        'swefminer-insert-update'                           );
+define ( 'swefminer_form_select',               'swefminer-select'                                  );
+define ( 'swefminer_form_select_update',        'swefminer-select-update'                           );
+define ( 'swefminer_form_table_pfx',            'swefminer-table-'                                  );
+define ( 'swefminer_form_table_update',         'swefminer-table-update'                            );
+define ( 'swefminer_form_title',                'swefminer-title'                                   );
+define ( 'swefminer_form_update',               'swefminer-update'                                  );
+define ( 'swefminer_form_update_update',        'swefminer-update-update'                           );
+define ( 'swefminer_form_updater',              'swefminer-updater'                                 );
+define ( 'swefminer_form_updater_pfx',          'swefminer-updater-'                                );
+define ( 'swefminer_form_usergroup',            'swefminer-usergroup'                               );
+define ( 'swefminer_form_usergroup_column',     'swefminer-usergroup-column'                        );
+define ( 'swefminer_form_usergroup_table',      'swefminer-usergroup-table'                         );
 
 
 // Files
@@ -57,11 +65,19 @@ define ( 'swefminer_call_column_remove',     'swefMinerColumnRemove'            
 define ( 'swefminer_call_column_unremove',   'swefMinerColumnUnremove'                              );
 define ( 'swefminer_call_column_update',     'swefMinerColumnUpdate'                                );
 define ( 'swefminer_call_columns',           'swefMinerColumns'                                     );
+define ( 'swefminer_call_delete_allow',      'swefMinerDeleteAllow'                                 );
+define ( 'swefminer_call_delete_deny',       'swefMinerDeleteDeny'                                  );
+define ( 'swefminer_call_insert_allow',      'swefMinerInsertAllow'                                 );
+define ( 'swefminer_call_insert_deny',       'swefMinerInsertDeny'                                  );
+define ( 'swefminer_call_select_allow',      'swefMinerSelectAllow'                                 );
+define ( 'swefminer_call_select_deny',       'swefMinerSelectDeny'                                  );
 define ( 'swefminer_call_table_create',      'swefMinerTableCreate'                                 );
 define ( 'swefminer_call_table_remove',      'swefMinerTableRemove'                                 );
 define ( 'swefminer_call_table_unremove',    'swefMinerTableUnremove'                               );
 define ( 'swefminer_call_table_update',      'swefMinerTableUpdate'                                 );
 define ( 'swefminer_call_tables',            'swefMinerTables'                                      );
+define ( 'swefminer_call_update_allow',      'swefMinerUpdateAllow'                                 );
+define ( 'swefminer_call_update_deny',       'swefMinerUpdateDeny'                                  );
 
 
 // Standard columns
@@ -106,6 +122,7 @@ define ( 'swefminer_col_usr',                'usr'                              
 
 
 // Other tokens
+define ( 'swefminer_get_column',             'cn'                                                   );
 define ( 'swefminer_get_table',              't'                                                    );
 define ( 'swefminer_get_usergroup',          'ug'                                                   );
 define ( 'swefminer_vendor',                 SWEF_VENDOR_SWEF                                       );

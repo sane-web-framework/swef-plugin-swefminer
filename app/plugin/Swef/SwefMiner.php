@@ -139,35 +139,37 @@ class SwefMiner extends \Swef\Bespoke\Plugin {
                 foreach ($m as $f=>$v) {
                     $this->tables[$i][$f] = $v;
                 }
-                if (array_key_exists(swefminer_col_inserters,$t)) {
-                    if (strlen($t[swefminer_col_inserters])) {
-                        $this->tables[$i][swefminer_col_inserters] = explode (
-                            SWEF_STR__COMMA
-                           ,$t[swefminer_col_inserters]
-                        );
-                    }
-                    else {
-                        $this->tables[$i][swefminer_col_inserters] = array ();
-                    }
+                break;
+            }
+        }
+        foreach ($this->tables as $i=>$t) {
+            if (array_key_exists(swefminer_col_inserters,$t)) {
+                if (strlen($t[swefminer_col_inserters])) {
+                    $this->tables[$i][swefminer_col_inserters] = explode (
+                        SWEF_STR__COMMA
+                       ,$t[swefminer_col_inserters]
+                    );
                 }
                 else {
                     $this->tables[$i][swefminer_col_inserters] = array ();
                 }
-                if (array_key_exists(swefminer_col_deleters,$t)) {
-                    if (strlen($t[swefminer_col_deleters])) {
-                        $this->tables[$i][swefminer_col_deleters] = explode (
-                            SWEF_STR__COMMA
-                           ,$t[swefminer_col_deleters]
-                        );
-                    }
-                    else {
-                        $this->tables[$i][swefminer_col_deleters] = array ();
-                    }
+            }
+            else {
+                $this->tables[$i][swefminer_col_inserters] = array ();
+            }
+            if (array_key_exists(swefminer_col_deleters,$t)) {
+                if (strlen($t[swefminer_col_deleters])) {
+                    $this->tables[$i][swefminer_col_deleters] = explode (
+                        SWEF_STR__COMMA
+                       ,$t[swefminer_col_deleters]
+                    );
                 }
                 else {
                     $this->tables[$i][swefminer_col_deleters] = array ();
                 }
-                break;
+            }
+            else {
+                $this->tables[$i][swefminer_col_deleters] = array ();
             }
         }
         $meta                   = $this->page->swef->db->dbCall (
@@ -195,170 +197,271 @@ class SwefMiner extends \Swef\Bespoke\Plugin {
                 foreach ($m as $f=>$v) {
                     $this->columns[$i][$f] = $v;
                 }
-                if (array_key_exists(swefminer_col_selectors,$c)) {
-                    if (strlen($c[swefminer_col_selectors])) {
-                        $this->columns[$i][swefminer_col_selectors] = explode (
-                            SWEF_STR__COMMA
-                           ,$c[swefminer_col_selectors]
-                        );
-                    }
-                    else {
-                        $this->columns[$i][swefminer_col_selectors] = array ();
-                    }
+                break;
+            }
+        }
+        foreach ($this->columns as $i=>$c) {
+            if (array_key_exists(swefminer_col_selectors,$c)) {
+                if (strlen($c[swefminer_col_selectors])) {
+                    $this->columns[$i][swefminer_col_selectors] = explode (
+                        SWEF_STR__COMMA
+                       ,$c[swefminer_col_selectors]
+                    );
                 }
                 else {
                     $this->columns[$i][swefminer_col_selectors] = array ();
                 }
-                if (array_key_exists(swefminer_col_updaters,$c)) {
-                    if (strlen($c[swefminer_col_updaters])) {
-                        $this->columns[$i][swefminer_col_updaters] = explode (
-                            SWEF_STR__COMMA
-                           ,$c[swefminer_col_updaters]
-                        );
-                    }
-                    else {
-                        $this->columns[$i][swefminer_col_updaters] = array ();
-                    }
+            }
+            else {
+                $this->columns[$i][swefminer_col_selectors] = array ();
+            }
+            if (array_key_exists(swefminer_col_updaters,$c)) {
+                if (strlen($c[swefminer_col_updaters])) {
+                    $this->columns[$i][swefminer_col_updaters] = explode (
+                        SWEF_STR__COMMA
+                       ,$c[swefminer_col_updaters]
+                    );
                 }
                 else {
                     $this->columns[$i][swefminer_col_updaters] = array ();
                 }
-                break;
+            }
+            else {
+                $this->columns[$i][swefminer_col_updaters] = array ();
             }
         }        
     }
 
-    public function dashboardController ( ) {
+    private function columnPermissionsUpdate ( ) {
+        foreach ($this->page->swef->usergroups as $ug) {
+            if ($this->page->_POST(swefminer_form_selector_pfx.$ug[SWEF_COL_USERGROUP])) {
+                $this->page->swef->db->dbCall (
+                    swefminer_call_select_allow,
+                    $this->page->_POST (swefminer_form_database),
+                    $this->page->_POST (swefminer_form_table),
+                    $this->page->_POST (swefminer_form_column),
+                    $ug[SWEF_COL_USERGROUP]
+                );
+            }
+            else {
+                $this->page->swef->db->dbCall (
+                    swefminer_call_select_deny,
+                    $this->page->_POST (swefminer_form_database),
+                    $this->page->_POST (swefminer_form_table),
+                    $this->page->_POST (swefminer_form_column),
+                    $ug[SWEF_COL_USERGROUP]
+                );
+            }
+            if ($this->page->_POST(swefminer_form_updater_pfx.$ug[SWEF_COL_USERGROUP])) {
+                $this->page->swef->db->dbCall (
+                    swefminer_call_update_allow,
+                    $this->page->_POST (swefminer_form_database),
+                    $this->page->_POST (swefminer_form_table),
+                    $this->page->_POST (swefminer_form_column),
+                    $ug[SWEF_COL_USERGROUP]
+                );
+            }
+            else {
+                $this->page->swef->db->dbCall (
+                    swefminer_call_update_deny,
+                    $this->page->_POST (swefminer_form_database),
+                    $this->page->_POST (swefminer_form_table),
+                    $this->page->_POST (swefminer_form_column),
+                    $ug[SWEF_COL_USERGROUP]
+                );
+            }
+        }
+    }
+
+    private function columnSelectUpdate ( ) {
+        if ($this->page->_POST(swefminer_form_select)) {
+            $this->page->swef->db->dbCall (
+                swefminer_call_select_allow,
+                $this->page->_POST (swefminer_form_database),
+                $this->page->_POST (swefminer_form_table),
+                $this->page->_POST (swefminer_form_column),
+                $this->page->_POST (swefminer_form_usergroup)
+            );
+        }
+        else {
+            $this->page->swef->db->dbCall (
+                swefminer_call_select_deny,
+                $this->page->_POST (swefminer_form_database),
+                $this->page->_POST (swefminer_form_table),
+                $this->page->_POST (swefminer_form_column),
+                $this->page->_POST (swefminer_form_usergroup)
+            );
+        }
+    }
+
+    private function columnUpdateUpdate ( ) {
+        if ($this->page->_POST(swefminer_form_update)) {
+            $this->page->swef->db->dbCall (
+                swefminer_call_update_allow,
+                $this->page->_POST (swefminer_form_database),
+                $this->page->_POST (swefminer_form_table),
+                $this->page->_POST (swefminer_form_column),
+                $this->page->_POST (swefminer_form_usergroup)
+            );
+        }
+        else {
+            $this->page->swef->db->dbCall (
+                swefminer_call_update_deny,
+                $this->page->_POST (swefminer_form_database),
+                $this->page->_POST (swefminer_form_table),
+                $this->page->_POST (swefminer_form_column),
+                $this->page->_POST (swefminer_form_usergroup)
+            );
+        }
+    }
+
+    private function columnUpdate ( ) {
+        $dbn                = $this->page->_POST (swefminer_form_database);
+        $tbn                = $this->page->_POST (swefminer_form_table);
+        $cln                = $this->page->_POST (swefminer_form_column);
+        $columns            = $this->page->swef->db->dbCall (
+            swefminer_call_columns,
+            $dbn,
+            swefminer_str_like_all
+        );
+        foreach ($columns as $c) {
+            if ($c[swefminer_col_database]==$dbn && $c[swefminer_col_table]==$tbn && $c[swefminer_col_column]==$cln) {
+                if (array_key_exists(swefminer_form_column_remove,$_POST)) {
+                    $this->page->swef->db->dbCall (swefminer_call_column_remove,$dbn,$tbn,$cln);
+                }
+                elseif (array_key_exists(swefminer_form_column_unremove,$_POST)) {
+                    $this->page->swef->db->dbCall (swefminer_call_column_unremove,$dbn,$tbn,$cln);
+                }
+                else {
+                    $this->page->swef->db->dbCall (
+                        swefminer_call_column_update,
+                        $dbn,
+                        $tbn,
+                        $cln,
+                        $this->page->_POST (swefminer_form_heading),
+                        $this->page->_POST (swefminer_form_hint),
+                        $this->postedDbBoolean (swefminer_col_trashes_record),
+                        $this->postedDbBoolean (swefminer_col_is_uuid),
+                        $this->postedDbBoolean (swefminer_col_is_edited_by),
+                        $this->postedDbBoolean (swefminer_col_is_edited),
+                        $this->postedDbBoolean (swefminer_col_describes_record)
+                    );
+                }
+                return;
+            }
+        }
+        $this->page->swef->db->dbCall (swefminer_call_column_create,$dbn,$tbn,$cln);
+    }
+
+    private function dashboardController ( ) {
         if (!count($_POST)) {
             return;
         }
-        if ($this->page->_POST (swefminer_form_couple)) {
-            $dbn                = $this->page->_POST (swefminer_form_database);
-            $tbn                = $this->page->_POST (swefminer_form_table);
-            $tables             = $this->page->swef->db->dbCall (
-                swefminer_call_tables,
-                $dbn,
-                swefminer_str_like_all
-            );
-            foreach ($tables as $t) {
-                if ($t[swefminer_col_database]==$dbn && $t[swefminer_col_table]==$tbn) {
-                    $ttl        = $this->page->_POST (swefminer_form_title);
-                    $dsc        = $this->page->_POST (swefminer_form_description);
-                    if ($ttl && $dsc) {
-                        $this->page->swef->db->dbCall (swefminer_call_table_update,$dbn,$tbn,$ttl,$dsc);
-                    }
-                    else {
-                        $this->page->swef->db->dbCall (swefminer_call_table_unremove,$dbn,$tbn);
-                    }
-                    $this->page->reload ();
-                    return;
-                }
-            }
-            $this->page->swef->db->dbCall (swefminer_call_table_create,$dbn,$tbn);
-            $this->page->reload ();
-            return;
+        if ($this->page->_POST(swefminer_form_select_update)) {
+            $this->columnSelectUpdate ();
         }
-        elseif ($this->page->_POST(swefminer_form_remove)) {
-            $dbn                = $this->page->_POST (swefminer_form_database);
-            $tbn                = $this->page->_POST (swefminer_form_table);
-            $this->page->swef->db->dbCall (swefminer_call_table_remove,$dbn,$tbn);
-            $this->page->reload ();
-            return;
+        elseif ($this->page->_POST(swefminer_form_update_update)) {
+            $this->columnUpdateUpdate ();
         }
-        elseif ($this->page->_POST(swefminer_form_table_usergroup)) {
-            $dbn        = $this->page->_GET (SWEF_GET_OPTION);
-            $tbn        = $this->page->_POST (swefminer_form_table);
-            $ug         = $this->page->_POST (swefminer_form_usergroup);
-            $ins        = SWEF_INT_0;
-            $del        = SWEF_INT_0;
-            if ($this->page->_POST(swefminer_form_inserter)) {
-                $ins    = SWEF_INT_1;
-            }
-            if ($this->page->_POST(swefminer_form_deleter)) {
-                $del    = SWEF_INT_1;
-            }
-            $this->notify (print_r($_POST,true));
-            $this->notify ("TABLE/USERGROUP: ".$dbn.','.$tbn.','.$ug.','.$ins.','.$del);
-            $this->page->reload ();
-            return;
+        elseif ($this->page->_POST(swefminer_form_delete_update)) {
+            $this->tableDeleteUpdate ();
+        }
+        elseif ($this->page->_POST(swefminer_form_insert_update)) {
+            $this->tableInsertUpdate ();
+        }
+        elseif ($this->page->_POST (swefminer_form_table_couple)) {
+            $this->tableUpdate ();
         }
         elseif ($this->page->_POST(swefminer_form_table_update)) {
-            $dbn        = $this->page->_GET (SWEF_GET_OPTION);
-            $tbn        = $this->page->_POST (swefminer_form_table);
-            $this->notify ('TABLE/UPDATE: '.$dbn.','.$tbn.','.print_r($_POST,true));
-            $this->page->reload ();
-            return;
+            $this->tableUpdate ();            
+        }
+        elseif ($this->page->_POST(swefminer_form_table_decouple)) {
+            $this->tableDecouple ();
         }
         elseif ($this->page->_POST(swefminer_form_column_update)) {
-            $dbn                = $this->page->_POST (swefminer_form_database);
-            $tbn                = $this->page->_POST (swefminer_form_table);
-            $cln                = $this->page->_POST (swefminer_form_column);
-            $columns            = $this->page->swef->db->dbCall (
-                swefminer_call_columns,
-                $dbn,
-                swefminer_str_like_all
-            );
-            foreach ($columns as $c) {
-                if ($c[swefminer_col_database]==$dbn && $c[swefminer_col_table]==$tbn && $c[swefminer_col_column]==$cln) {
-                    if (array_key_exists(swefminer_form_column_remove,$_POST)) {
-                        $this->page->swef->db->dbCall (swefminer_call_column_remove,$dbn,$tbn,$cln);
-                    }
-                    elseif (array_key_exists(swefminer_form_column_unremove,$_POST)) {
-                        $this->page->swef->db->dbCall (swefminer_call_column_unremove,$dbn,$tbn,$cln);
-                    }
-                    else {
-$this->notify ('COLUMN/UPDATE: '.print_r($_POST,true));
-                        $hdg    = $this->page->_POST (swefminer_form_heading);
-                        $hnt    = $this->page->_POST (swefminer_form_hint);
-                        $this->page->swef->db->dbCall (swefminer_call_column_update,$dbn,$tbn,$cln,$hdg,$hnt);
-                    }
-                    $this->page->reload ();
-                    return;
-                }
-            }
-            $this->page->swef->db->dbCall (swefminer_call_column_create,$dbn,$tbn,$cln);
-            $this->page->reload ();
-            return;
+            $this->columnUpdate ();
+            $this->columnPermissionsUpdate ();
         }
-        elseif ($this->page->_POST(swefminer_form_usergroup_table)) {
-            $ug         = $this->page->_GET (swefminer_get_usergroup);
-            $dbn        = $this->page->_GET (SWEF_GET_OPTION);
-            $tbn        = $this->page->_POST (swefminer_form_table);
-            $ins        = SWEF_INT_0;
-            $del        = SWEF_INT_0;
-            if ($this->page->_POST(swefminer_form_inserter)) {
-                $ins    = SWEF_INT_1;
-            }
-            if ($this->page->_POST(swefminer_form_deleter)) {
-                $del    = SWEF_INT_1;
-            }
-            $this->notify ('USERGROUP/TABLE: '.$ug.','.$dbn.','.$tbn.','.$ins.','.$del);
-            $this->page->reload ();
-            return;
+        else {
+            $this->notify ("Sorry - that posted data did not make sense");
         }
-        elseif ($this->page->_POST(swefminer_form_usergroup_column)) {
-            $ug         = $this->page->_GET (swefminer_get_usergroup);
-            $dbn        = $this->page->_GET (SWEF_GET_OPTION);
-            $tbn        = $this->page->_POST (swefminer_form_table);
-            $cln        = $this->page->_POST (swefminer_form_column);
-            $ins        = SWEF_INT_0;
-            $del        = SWEF_INT_0;
-            if ($this->page->_POST(swefminer_form_inserter)) {
-                $ins    = SWEF_INT_1;
-            }
-            if ($this->page->_POST(swefminer_form_deleter)) {
-                $del    = SWEF_INT_1;
-            }
-            $this->notify ("USERGROUP/COLUMN: ".$ug.','.$dbn.','.$tbn.','.$cln.','.$ins.','.$del);
-            $this->page->reload ();
-            return;
-        }
-        $this->notify ("Sorry - that posted data did not make sense");
         $this->page->reload ();
     }
 
     public function formID ( ) {
         return swefminer_formid_pfx.implode(swefminer_formid_sep,func_get_args());
+    }
+
+    public function postedDbBoolean ($key) {
+        return intval (strlen($this->page->_POST($key))>SWEF_INT_0);
+    }
+
+    private function tableInsertUpdate ($ug) {
+        if ($this->page->_POST(swefminer_form_insert)) {
+            $this->page->swef->db->dbCall (
+                swefminer_call_insert_allow,
+                $this->page->_POST (swefminer_form_database),
+                $this->page->_POST (swefminer_form_table),
+                $this->page->_POST (swefminer_form_usergroup)
+            );
+        }
+        else {
+            $this->page->swef->db->dbCall (
+                swefminer_call_insert_deny,
+                $this->page->_POST (swefminer_form_database),
+                $this->page->_POST (swefminer_form_table),
+                $this->page->_POST (swefminer_form_usergroup)
+            );
+        }
+    }
+
+    private function tableDeleteUpdate ($ug) {
+        if ($this->page->_POST(swefminer_form_delete)) {
+            $this->page->swef->db->dbCall (
+                swefminer_call_delete_allow,
+                $this->page->_POST (swefminer_form_database),
+                $this->page->_POST (swefminer_form_table),
+                $this->page->_POST (swefminer_form_usergroup)
+            );
+        }
+        else {
+            $this->page->swef->db->dbCall (
+                swefminer_call_delete_deny,
+                $this->page->_POST (swefminer_form_database),
+                $this->page->_POST (swefminer_form_table),
+                $this->page->_POST (swefminer_form_usergroup)
+            );
+        }
+    }
+
+    private function tableDecouple ( ) {
+        $dbn            = $this->page->_POST (swefminer_form_database);
+        $tbn            = $this->page->_POST (swefminer_form_table);
+        $this->page->swef->db->dbCall (swefminer_call_table_remove,$dbn,$tbn);
+    }
+
+    private function tableUpdate ( ) {
+        $dbn            = $this->page->_POST (swefminer_form_database);
+        $tbn            = $this->page->_POST (swefminer_form_table);
+        $tables         = $this->page->swef->db->dbCall (
+            swefminer_call_tables,
+            $dbn,
+            swefminer_str_like_all
+        );
+        foreach ($tables as $t) {
+            if ($t[swefminer_col_database]==$dbn && $t[swefminer_col_table]==$tbn) {
+                $ttl    = $this->page->_POST (swefminer_form_title);
+                $dsc    = $this->page->_POST (swefminer_form_description);
+                if ($ttl && $dsc) {
+                    $this->page->swef->db->dbCall (swefminer_call_table_update,$dbn,$tbn,$ttl,$dsc);
+                }
+                else {
+                    $this->page->swef->db->dbCall (swefminer_call_table_unremove,$dbn,$tbn);
+                }
+                return;
+            }
+        }
+        $this->page->swef->db->dbCall (swefminer_call_table_create,$dbn,$tbn);
     }
 
 }

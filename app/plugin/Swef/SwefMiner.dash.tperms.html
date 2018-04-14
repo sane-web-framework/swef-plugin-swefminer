@@ -1,15 +1,13 @@
-                <div class="third warn-2">
+                <div class="warn-2 swefminer-perms">
                   <label><t en>Inserters</t>:</label>
                 </div>
 <?php       foreach($this->page->swef->usergroups as $ug): ?>
-                <form id="<?php echo htmlentities ($this->formID($table[swefminer_col_database],$table[swefminer_col_table],$ug[SWEF_COL_USERGROUP],swefminer_form_inserter)); ?>" action="?c=%5cSwef%5cSwefMiner&amp;o=<?php echo htmlentities ($this->page->_GET(SWEF_GET_OPTION)); ?>&amp;t=<?php echo htmlentities ($table[swefminer_col_table]); ?>" method="post">
-                  <input type="hidden" name="<?php echo htmlentities (swefminer_form_table_usergroup); ?>" value="1" />
-                  <input type="hidden" name="<?php echo htmlentities (swefminer_form_table); ?>" value="<?php echo htmlentities ($table[swefminer_col_table]); ?>" />
-                  <div class="input third warn-2">
+                <form method="post" action="">
+                  <div class="input warn-2 swefminer-perms">
                     <label>&nbsp;</label>
                     <input
                       id="<?php echo htmlentities ($this->formID($table[swefminer_col_database],$table[swefminer_col_table],$ug[SWEF_COL_USERGROUP],swefminer_form_inserter,swefminer_form_inserter)); ?>"
-                      name="<?php echo htmlentities (swefminer_form_inserter); ?>"
+                      name="<?php echo htmlentities (swefminer_form_insert); ?>"
                       type="checkbox"
                       onchange="swef.wait();this.form.submit()"
 <?php         if(in_array($ug[SWEF_COL_USERGROUP],$table[swefminer_col_inserters])): ?>
@@ -18,24 +16,22 @@
                     />
                     <label for="<?php echo htmlentities ($this->formID($table[swefminer_col_database],$table[swefminer_col_table],$ug[SWEF_COL_USERGROUP],swefminer_form_inserter,swefminer_form_inserter)); ?>"><?php echo htmlentities ($ug[SWEF_COL_USERGROUP_NAME]); ?></label>
                   </div>
+                  <input type="hidden" name="<?php echo swefminer_form_insert_update; ?>" value="1" />
+                  <input type="hidden" name="<?php echo swefminer_form_usergroup; ?>" value="<?php echo htmlentities ($ug[SWEF_COL_USERGROUP]); ?>" />
                   <input type="hidden" name="<?php echo swefminer_form_table; ?>" value="<?php echo htmlentities ($table[swefminer_col_table]); ?>" />
-<?php         if(in_array($ug[SWEF_COL_USERGROUP],$table[swefminer_col_deleters])): ?>
-                  <input type="hidden" name="<?php echo htmlentities (swefminer_form_deleter); ?>" value="on" />
-<?php         endif; ?>
+                  <input type="hidden" name="<?php echo swefminer_form_database; ?>" value="<?php echo htmlentities ($table[swefminer_col_database]); ?>" />
                 </form>
 <?php       endforeach; ?>
-                <div class="third warn-4">
+                <div class="warn-4 swefminer-perms">
                   <label><t en>Deleters</t>:</label>
                 </div>
 <?php       foreach($this->page->swef->usergroups as $ug): ?>
-                <form id="<?php echo htmlentities ($this->formID($table[swefminer_col_database],$table[swefminer_col_table],$ug[SWEF_COL_USERGROUP],swefminer_form_deleter)); ?>" action="?c=%5cSwef%5cSwefMiner&amp;o=<?php echo htmlentities ($this->page->_GET(SWEF_GET_OPTION)); ?>&amp;t=<?php echo htmlentities ($table[swefminer_col_table]); ?>" method="post">
-                  <input type="hidden" name="<?php echo htmlentities (swefminer_form_table_usergroup); ?>" value="1" />
-                  <input type="hidden" name="<?php echo htmlentities (swefminer_form_table); ?>" value="<?php echo htmlentities ($table[swefminer_col_table]); ?>" />
-                  <div class="input third warn-4">
+                <form method="post" action="">
+                  <div class="input warn-4 swefminer-perms">
                     <label>&nbsp;</label>
                     <input
                       id="<?php echo htmlentities ($this->formID($table[swefminer_col_database],$table[swefminer_col_table],$ug[SWEF_COL_USERGROUP],swefminer_form_deleter,swefminer_form_deleter)); ?>"
-                      name="<?php echo htmlentities (swefminer_form_deleter); ?>"
+                      name="<?php echo htmlentities (swefminer_form_delete); ?>"
                       type="checkbox"
                       onchange="swef.wait();this.form.submit()"
 <?php         if(in_array($ug[SWEF_COL_USERGROUP],$table[swefminer_col_deleters])): ?>
@@ -44,9 +40,9 @@
                     />
                     <label for="<?php echo htmlentities ($this->formID($table[swefminer_col_database],$table[swefminer_col_table],$ug[SWEF_COL_USERGROUP],swefminer_form_deleter,swefminer_form_deleter)); ?>"><?php echo htmlentities ($ug[SWEF_COL_USERGROUP_NAME]); ?></label>
                   </div>
+                  <input type="hidden" name="<?php echo swefminer_form_delete_update; ?>" value="1" />
+                  <input type="hidden" name="<?php echo swefminer_form_usergroup; ?>" value="<?php echo htmlentities ($ug[SWEF_COL_USERGROUP]); ?>" />
                   <input type="hidden" name="<?php echo swefminer_form_table; ?>" value="<?php echo htmlentities ($table[swefminer_col_table]); ?>" />
-<?php         if(in_array($ug[SWEF_COL_USERGROUP],$table[swefminer_col_inserters])): ?>
-                  <input type="hidden" name="<?php echo htmlentities (swefminer_form_inserter); ?>" value="on" />
-<?php         endif; ?>
+                  <input type="hidden" name="<?php echo swefminer_form_database; ?>" value="<?php echo htmlentities ($table[swefminer_col_database]); ?>" />
                 </form>
 <?php       endforeach; ?>

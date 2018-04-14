@@ -1,7 +1,13 @@
 
 
-.swefminer-column-perms {
-	width:              30vw;
+.swefminer-perms {
+	width:              40vw;
+    height:             auto;
+}
+
+
+.swefminer-foreign {
+	color:              #dd5500;
 }
 
 
