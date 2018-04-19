@@ -78,6 +78,7 @@ class SwefMiner extends \Swef\Bespoke\Plugin {
         if (!$this->model) {
             return SWEF_BOOL_TRUE;
         }
+        $this->_init ($this->model);
         $this->browse ();
         return SWEF_BOOL_FALSE;
     }
@@ -103,9 +104,9 @@ class SwefMiner extends \Swef\Bespoke\Plugin {
     SUPPORTING METHODS
 */
 
-    public function _init ( ) {
-        $constants          = get_defined_constants (SWEF_BOOL_TRUE) [swefminer_col_user];
-        $len                = strlen (swefminer_str_pfx_dm);
+    private function _init ($dm=null) {
+        $constants              = get_defined_constants (SWEF_BOOL_TRUE) [swefminer_col_user];
+        $len                    = strlen (swefminer_str_pfx_dm);
         foreach ($constants as $c=>$dsn) {
             if (strpos($c,swefminer_str_pfx_dm)!==SWEF_INT_0) {
                 continue;
@@ -117,13 +118,13 @@ class SwefMiner extends \Swef\Bespoke\Plugin {
             if (substr($c,(SWEF_INT_0-strlen(swefminer_str_sfx_dsn)))!=swefminer_str_sfx_dsn) {
                 continue;
             }
-            $dm             = substr ($c,0,(SWEF_INT_0-strlen(swefminer_str_sfx_dsn)));
-            $dsn            = constant (swefminer_str_pfx_dm.$c);
+            $dm                 = substr ($c,0,(SWEF_INT_0-strlen(swefminer_str_sfx_dsn)));
+            $dsn                = constant (swefminer_str_pfx_dm.$c);
             if (!defined(swefminer_str_pfx_dm.$dm.swefminer_str_sfx_dbn)) {
                 $this->notify ('Data model "'.$dm.'" has no database name - define '.swefminer_str_pfx_dm.$dm.swefminer_str_sfx_dbn);
                 return;
             }
-            $dbn            = constant (swefminer_str_pfx_dm.$dm.swefminer_str_sfx_dbn);
+            $dbn                = constant (swefminer_str_pfx_dm.$dm.swefminer_str_sfx_dbn);
             if (!defined(swefminer_str_pfx_dm.$dm.swefminer_str_sfx_usr)) {
                 $this->notify ('Data model "'.$dm.'" has no database user - define '.swefminer_str_pfx_dm.$dm.swefminer_str_sfx_usr);
                 return;
@@ -136,29 +137,29 @@ class SwefMiner extends \Swef\Bespoke\Plugin {
                 $this->notify ('Data model "'.$dm.'" has no descriptive tag - define '.swefminer_str_pfx_dm.$dm.swefminer_str_sfx_tag);
                 return;
             }
-            $this->models[$dm] = constant (swefminer_str_pfx_dm.$dm.swefminer_str_sfx_tag);
+            $this->models[$dm]  = constant (swefminer_str_pfx_dm.$dm.swefminer_str_sfx_tag);
         }
-        if (!($dm=$this->page->_GET(SWEF_GET_OPTION))) {
-            return;
+        if (!$dm) {
+            $dm                 = $this->page->_GET(SWEF_GET_OPTION);
         }
         if (!array_key_exists($dm,$this->models)) {
             return;
         }
         if (defined(swefminer_str_pfx_dm.$dm.swefminer_str_sfx_tlk)) {
-            $table_like     = constant (swefminer_str_pfx_dm.$dm.swefminer_str_sfx_tlk);
+            $table_like         = constant (swefminer_str_pfx_dm.$dm.swefminer_str_sfx_tlk);
         }
         else {
-            $table_like     = swefminer_str_like_all;
+            $table_like         = swefminer_str_like_all;
         }
-        $dsn                = constant (swefminer_str_pfx_dm.$dm.swefminer_str_sfx_dsn);
-        $dsn               .= ';dbname=';
-        $dsn               .= constant (swefminer_str_pfx_dm.$dm.swefminer_str_sfx_dbn);
-        $this->db           = new \Swef\Bespoke\Database (
+        $dsn                    = constant (swefminer_str_pfx_dm.$dm.swefminer_str_sfx_dsn);
+        $dsn                   .= ';dbname=';
+        $dsn                   .= constant (swefminer_str_pfx_dm.$dm.swefminer_str_sfx_dbn);
+        $this->db               = new \Swef\Bespoke\Database (
             $dsn,
             constant (swefminer_str_pfx_dm.$dm.swefminer_str_sfx_usr),
             constant (swefminer_str_pfx_dm.$dm.swefminer_str_sfx_pwd)
         );
-        $this->tables       = $this->db->dbCall (
+        $this->tables           = $this->db->dbCall (
             swefminer_call_model_tables,
             constant (swefminer_str_pfx_dm.$dm.swefminer_str_sfx_dbn),
             $table_like
@@ -172,7 +173,7 @@ class SwefMiner extends \Swef\Bespoke\Plugin {
             return;
         }
         $this->page->diagnosticAdd ('Data model "'.$dm.'": '.$this->db->dbCallLast());
-        $meta               = $this->page->swef->db->dbCall (
+        $meta                   = $this->page->swef->db->dbCall (
             swefminer_call_tables,
             constant (swefminer_str_pfx_dm.$dm.swefminer_str_sfx_dbn),
             $table_like
@@ -282,7 +283,7 @@ class SwefMiner extends \Swef\Bespoke\Plugin {
     }
 
     private function browse ( ) {
-?><h2>SwefMiner data browser</h2><?php
+        require_once swefminer_file_browse;
     }
 
     private function columnPermissionsUpdate ( ) {
