@@ -9,10 +9,13 @@ class SwefMiner extends \Swef\Bespoke\Plugin {
     PROPERTIES
 */
 
+    public  $browsingDashboard;
     public  $browse;
     public  $columns                = array ();
+    public  $model;
     public  $models                 = array ();
     public  $joins                  = array ();
+    public  $request;
     public  $rows                   = array ();
     public  $supportedPDODrivers    = array ();
     public  $tables                 = array ();
@@ -31,6 +34,52 @@ class SwefMiner extends \Swef\Bespoke\Plugin {
     public function __destruct ( ) {
         // Always destruct the base class - PHP does not do this implicitly
         parent::__destruct ( );
+    }
+
+    public function _on_pageIdentifyBefore ( ) {
+        if (preg_match(swefminer_dashboard_context_preg,$this->page->swef->context[SWEF_COL_CONTEXT])) {
+            if (!strlen(swefminer_uris_dashboard)) {
+                return SWEF_BOOL_TRUE;
+            }
+            $models             = explode (swefminer_str_sep_pairs,swefminer_uris_dashboard);
+        }
+        else {
+            if (!strlen(swefminer_uris_public)) {
+                return SWEF_BOOL_TRUE;
+            }
+            $models             = explode (swefminer_str_sep_pairs,swefminer_uris_public);
+        }
+        foreach ($models as $m) {
+            $m = explode (swefminer_str_sep_keyval,$m);
+            if (strpos($_SERVER[SWEF_STR_REQUEST_URI],$m[1])===SWEF_INT_0) {
+                $request        = substr ($_SERVER[SWEF_STR_REQUEST_URI],strlen($m[1]));
+                if (!strlen($request)) {
+                    $this->model    = $m[0];
+                    $this->request  = SWEF_STR__EMPTY;
+                    break;
+                }
+                if (strpos($request,DIRECTORY_SEPARATOR)!==SWEF_INT_0) {
+                    continue;
+                }
+                $this->model    = $m[0];
+                $this->request  = substr ($request,SWEF_INT_1);
+                break;
+            }
+        }
+        if (!$this->model) {
+            return SWEF_BOOL_TRUE;
+        }
+        $this->page->endpoint = $this->page->swef->context[SWEF_COL_HOME];
+        $this->page->identify ();
+        return SWEF_BOOL_FALSE;
+    }
+
+    public function _on_pageScriptBefore ( ) {
+        if (!$this->model) {
+            return SWEF_BOOL_TRUE;
+        }
+        $this->browse ();
+        return SWEF_BOOL_FALSE;
     }
 
 
@@ -230,6 +279,10 @@ class SwefMiner extends \Swef\Bespoke\Plugin {
                 $this->columns[$i][swefminer_col_updaters] = array ();
             }
         }        
+    }
+
+    private function browse ( ) {
+?><h2>SwefMiner data browser</h2><?php
     }
 
     private function columnPermissionsUpdate ( ) {

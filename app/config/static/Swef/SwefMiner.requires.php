@@ -12,4 +12,9 @@ require_once SWEF_DIR_CONFIG.'/user/Swef/SwefMiner.config.php';
 require_once SWEF_DIR_PLUGIN.'/Swef/SwefMiner.php';
 
 
+// CLASSES
+require_once SWEF_DIR_CLASS.'/Swef/Base/SwefMinerTable.class.php';
+require_once SWEF_DIR_CLASS.'/Swef/Bespoke/SwefMinerTable.class.php';
+
+
 ?>
