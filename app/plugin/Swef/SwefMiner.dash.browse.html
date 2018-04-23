@@ -1,8 +1,7 @@
 
 <select>
-<?php foreach ($this->tables as $table): ?>
-<?php   if (array_key_exists(swefminer_col_table,$table)): ?>
-  <option title="<?php echo htmlspecialchars ($table[swefminer_col_description]); ?>" value="<?php echo htmlspecialchars ($table[swefminer_col_table_name]); ?>"><?php echo htmlspecialchars ($table[swefminer_col_title]); ?></option>
-<?php   endif; ?>
+  <option value=""><t en>Select table</t>:</option>
+<?php foreach ($this->entities as $e): ?>
+  <option value="<?php echo htmlspecialchars ($e[swefminer_col_table_name]); ?>"><?php echo htmlspecialchars ($e[swefminer_col_title]); ?> - <?php echo htmlspecialchars ($e[swefminer_col_description]); ?></option>
 <?php endforeach; ?>
 </select>

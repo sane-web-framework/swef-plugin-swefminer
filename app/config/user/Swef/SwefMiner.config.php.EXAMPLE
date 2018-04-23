@@ -7,6 +7,8 @@ define ( 'swefminer_dm_example_usr',        'root'                              
 define ( 'swefminer_dm_example_pwd',        ''                                                                  );
 define ( 'swefminer_dm_example_tlk',        '%'                                                                 );
 define ( 'swefminer_dm_example_tag',        'My Data Model'                                                     );
+define ( 'swefminer_dm_example_hd_dash',    'SwefMiner: My Model (dash)'                                        );
+define ( 'swefminer_dm_example_hd_pub',     'SwefMiner: My Model (public)'                                      );
 
 // Data model called "example2"
 define ( 'swefminer_dm_example2_dsn',       'mysql:host=localhost;port=3306;charset=utf8'                       );
@@ -15,6 +17,8 @@ define ( 'swefminer_dm_example2_usr',       'root'                              
 define ( 'swefminer_dm_example2_pwd',       ''                                                                  );
 define ( 'swefminer_dm_example2_tlk',       '%'                                                                 );
 define ( 'swefminer_dm_example2_tag',       'My 2nd Data Model'                                                 );
+define ( 'swefminer_dm_example_hd_dash',    'SwefMiner: My 2nd Model (dash)'                                    );
+define ( 'swefminer_dm_example_hd_pub',     'SwefMiner: My 2nd Model (public)'                                  );
 
 // Other definitions
 define ( 'swefminer_str_sep_pairs', ';' );

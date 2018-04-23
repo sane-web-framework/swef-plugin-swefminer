@@ -12,13 +12,14 @@ class SwefMiner extends \Swef\Bespoke\Plugin {
     public  $browsingDashboard;
     public  $browse;
     public  $columns                = array ();
+    public  $entities               = array ();
     public  $model;
     public  $models                 = array ();
     public  $joins                  = array ();
-    public  $request;
     public  $rows                   = array ();
     public  $supportedPDODrivers    = array ();
     public  $tables                 = array ();
+    public  $view;
 
 
 /*
@@ -41,28 +42,21 @@ class SwefMiner extends \Swef\Bespoke\Plugin {
             if (!strlen(swefminer_uris_dashboard)) {
                 return SWEF_BOOL_TRUE;
             }
+            $this->view         = swefminer_str_dash;
             $models             = explode (swefminer_str_sep_pairs,swefminer_uris_dashboard);
         }
         else {
             if (!strlen(swefminer_uris_public)) {
                 return SWEF_BOOL_TRUE;
             }
+            $this->view         = swefminer_str_pub;
             $models             = explode (swefminer_str_sep_pairs,swefminer_uris_public);
         }
+        $request                = explode (SWEF_STR__QMARK,$this->page->requestURI)[0];
         foreach ($models as $m) {
-            $m = explode (swefminer_str_sep_keyval,$m);
-            if (strpos($_SERVER[SWEF_STR_REQUEST_URI],$m[1])===SWEF_INT_0) {
-                $request        = substr ($_SERVER[SWEF_STR_REQUEST_URI],strlen($m[1]));
-                if (!strlen($request)) {
-                    $this->model    = $m[0];
-                    $this->request  = SWEF_STR__EMPTY;
-                    break;
-                }
-                if (strpos($request,DIRECTORY_SEPARATOR)!==SWEF_INT_0) {
-                    continue;
-                }
+            $m                  = explode (swefminer_str_sep_keyval,$m);
+            if ($m[1]==$request) {
                 $this->model    = $m[0];
-                $this->request  = substr ($request,SWEF_INT_1);
                 break;
             }
         }
@@ -81,6 +75,23 @@ class SwefMiner extends \Swef\Bespoke\Plugin {
         $this->_init ($this->model);
         $this->browse ();
         return SWEF_BOOL_FALSE;
+    }
+
+
+    public function _on_pageTemplateBefore ( ) {
+        if (!$this->model) {
+            return SWEF_BOOL_TRUE;
+        }
+        if ($this->view=swefminer_str_dash) {
+            $const = swefminer_str_pfx_dm.$this->model.swefminer_str_sfx_hd_dash;
+        }
+        else {
+            $const = swefminer_str_pfx_dm.$this->model.swefminer_str_sfx_hd_pub;
+        }
+        if (defined($const)) {
+            $this->page->titleSet (constant($const));
+        }
+        return SWEF_BOOL_TRUE;
     }
 
 
@@ -118,26 +129,26 @@ class SwefMiner extends \Swef\Bespoke\Plugin {
             if (substr($c,(SWEF_INT_0-strlen(swefminer_str_sfx_dsn)))!=swefminer_str_sfx_dsn) {
                 continue;
             }
-            $dm                 = substr ($c,0,(SWEF_INT_0-strlen(swefminer_str_sfx_dsn)));
+            $model              = substr ($c,0,(SWEF_INT_0-strlen(swefminer_str_sfx_dsn)));
             $dsn                = constant (swefminer_str_pfx_dm.$c);
-            if (!defined(swefminer_str_pfx_dm.$dm.swefminer_str_sfx_dbn)) {
-                $this->notify ('Data model "'.$dm.'" has no database name - define '.swefminer_str_pfx_dm.$dm.swefminer_str_sfx_dbn);
+            if (!defined(swefminer_str_pfx_dm.$model.swefminer_str_sfx_dbn)) {
+                $this->notify ('Data model "'.$model.'" has no database name - define '.swefminer_str_pfx_dm.$model.swefminer_str_sfx_dbn);
                 return;
             }
-            $dbn                = constant (swefminer_str_pfx_dm.$dm.swefminer_str_sfx_dbn);
-            if (!defined(swefminer_str_pfx_dm.$dm.swefminer_str_sfx_usr)) {
-                $this->notify ('Data model "'.$dm.'" has no database user - define '.swefminer_str_pfx_dm.$dm.swefminer_str_sfx_usr);
+            $dbn                = constant (swefminer_str_pfx_dm.$model.swefminer_str_sfx_dbn);
+            if (!defined(swefminer_str_pfx_dm.$model.swefminer_str_sfx_usr)) {
+                $this->notify ('Data model "'.$model.'" has no database user - define '.swefminer_str_pfx_dm.$model.swefminer_str_sfx_usr);
                 return;
             }
-            if (!defined(swefminer_str_pfx_dm.$dm.swefminer_str_sfx_pwd)) {
-                $this->notify ('Data model "'.$dm.'" has no database password - define '.swefminer_str_pfx_dm.$dm.swefminer_str_sfx_pwd);
+            if (!defined(swefminer_str_pfx_dm.$model.swefminer_str_sfx_pwd)) {
+                $this->notify ('Data model "'.$model.'" has no database password - define '.swefminer_str_pfx_dm.$model.swefminer_str_sfx_pwd);
                 return;
             }
-            if (!defined(swefminer_str_pfx_dm.$dm.swefminer_str_sfx_tag)) {
-                $this->notify ('Data model "'.$dm.'" has no descriptive tag - define '.swefminer_str_pfx_dm.$dm.swefminer_str_sfx_tag);
+            if (!defined(swefminer_str_pfx_dm.$model.swefminer_str_sfx_tag)) {
+                $this->notify ('Data model "'.$model.'" has no descriptive tag - define '.swefminer_str_pfx_dm.$model.swefminer_str_sfx_tag);
                 return;
             }
-            $this->models[$dm]  = constant (swefminer_str_pfx_dm.$dm.swefminer_str_sfx_tag);
+            $this->models[$model]  = constant (swefminer_str_pfx_dm.$model.swefminer_str_sfx_tag);
         }
         if (!$dm) {
             $dm                 = $this->page->_GET(SWEF_GET_OPTION);
@@ -283,6 +294,13 @@ class SwefMiner extends \Swef\Bespoke\Plugin {
     }
 
     private function browse ( ) {
+        foreach ($this->tables as $t) {
+            if (array_key_exists(swefminer_col_ignore,$t)) {
+                if (!$t[swefminer_col_ignore]) {
+                    array_push ($this->entities,$t);
+                }
+            }
+        }
         require_once swefminer_file_browse;
     }
 

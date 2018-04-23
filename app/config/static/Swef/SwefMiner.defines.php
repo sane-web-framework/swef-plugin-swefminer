@@ -123,6 +123,7 @@ define ( 'swefminer_formid_sep',            '-'                                 
 define ( 'swefminer_pdo_driver_mysql',      'mysql'                                                 );
 define ( 'swefminer_pdo_support',           '<^[A-z0-9_]+$>'                                        );
 define ( 'swefminer_preg_table',            '<^[A-z0-9_]+$>'                                        );
+define ( 'swefminer_str_dash',              'dash'                                                  );
 define ( 'swefminer_str_dsn',               'dsn'                                                   );
 define ( 'swefminer_str_from',              'FROM'                                                  );
 define ( 'swefminer_str_indent',            '   '                                                   );
@@ -130,10 +131,13 @@ define ( 'swefminer_str_left_join',         'LEFT JOIN'                         
 define ( 'swefminer_str_like_all',          '%'                                                     );
 define ( 'swefminer_str_pfx_dm',            'swefminer_dm_'                                         );
 define ( 'swefminer_str_pri',               'PRI'                                                   );
+define ( 'swefminer_str_pub',               'pub'                                                   );
 define ( 'swefminer_str_pwd',               'pwd'                                                   );
 define ( 'swefminer_str_select',            'SELECT'                                                );
 define ( 'swefminer_str_sfx_dbn',           '_dbn'                                                  );
 define ( 'swefminer_str_sfx_dsn',           '_dsn'                                                  );
+define ( 'swefminer_str_sfx_hd_dash',       '_hd_dash'                                              );
+define ( 'swefminer_str_sfx_hd_pub',        '_hd_pub'                                               );
 define ( 'swefminer_str_sfx_usr',           '_usr'                                                  );
 define ( 'swefminer_str_sfx_pwd',           '_pwd'                                                  );
 define ( 'swefminer_str_sfx_tag',           '_tag'                                                  );
