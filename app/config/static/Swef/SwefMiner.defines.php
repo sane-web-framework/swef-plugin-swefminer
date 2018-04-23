@@ -136,11 +136,8 @@ define ( 'swefminer_str_pwd',               'pwd'                               
 define ( 'swefminer_str_select',            'SELECT'                                                );
 define ( 'swefminer_str_sfx_dbn',           '_dbn'                                                  );
 define ( 'swefminer_str_sfx_dsn',           '_dsn'                                                  );
-
-# Added 20180421
 define ( 'swefminer_str_sfx_hd_dash',       '_hd_dash'                                              );
 define ( 'swefminer_str_sfx_hd_pub',        '_hd_pub'                                               );
-
 define ( 'swefminer_str_sfx_usr',           '_usr'                                                  );
 define ( 'swefminer_str_sfx_pwd',           '_pwd'                                                  );
 define ( 'swefminer_str_sfx_tag',           '_tag'                                                  );
