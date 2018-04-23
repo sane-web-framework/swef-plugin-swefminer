@@ -1,7 +1,52 @@
+<form id="swefminer-browse" method="get" action="<?php echo htmlspecialchars ($this->page->requestPath); ?>">
 
-<select>
-  <option value=""><t en>Select table</t>:</option>
-<?php foreach ($this->entities as $e): ?>
-  <option value="<?php echo htmlspecialchars ($e[swefminer_col_table_name]); ?>"><?php echo htmlspecialchars ($e[swefminer_col_title]); ?> - <?php echo htmlspecialchars ($e[swefminer_col_description]); ?></option>
+  <select name="<?php echo swefminer_get_usergroup; ?>" onchange="swef.wait();this.form.submit()">
+    <option value=""><t en>Select user group</t>:</option>
+<?php foreach ($this->page->swef->usergroups as $ug): ?>
+<?php   foreach ($this->page->swef->user->memberships as $m): ?>
+<?php     if ($m[SWEF_COL_USERGROUP]==$ug[SWEF_COL_USERGROUP]): ?>
+    <option
+      value="<?php echo htmlspecialchars ($ug[SWEF_COL_USERGROUP]); ?>"
+<?php       if ($this->page->_GET(swefminer_get_usergroup)==$ug[SWEF_COL_USERGROUP]): ?>
+      selected="selected"
+<?php       endif; ?>
+    >
+      <?php echo htmlspecialchars ($ug[SWEF_COL_USERGROUP_NAME]); ?>
+    </option>
+<?php        break; ?>
+<?php      endif; ?>
+<?php   endforeach; ?>
 <?php endforeach; ?>
-</select>
+  </select>
+
+  <select name="<?php echo swefminer_get_table; ?>" onchange="swef.wait();this.form.submit()">
+    <option value="">
+      <t en>Select table</t>:
+    </option>
+<?php foreach ($this->entities as $e): ?>
+    <option
+      value="<?php echo htmlspecialchars ($e[swefminer_col_table_name]); ?>"
+<?php       if ($this->page->_GET(swefminer_get_table)==$e[swefminer_col_table_name]): ?>
+      selected="selected"
+<?php       endif; ?>
+    >
+      <?php echo htmlspecialchars ($e[swefminer_col_title]); ?> - <?php echo htmlspecialchars ($e[swefminer_col_description]); ?>
+    </option>
+<?php endforeach; ?>
+  </select>
+
+</form>
+
+
+<table>
+  <thead>
+    <tr>
+<?php foreach ($this->properties as $p): ?>
+      <th>
+        <?php echo htmlspecialchars ($p[swefminer_col_heading]); ?>
+      </th>
+<?php endforeach; ?>
+    </tr>
+  </thead>
+</table>
+

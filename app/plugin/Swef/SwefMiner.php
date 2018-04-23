@@ -11,15 +11,16 @@ class SwefMiner extends \Swef\Bespoke\Plugin {
 
     public  $browsingDashboard;
     public  $browse;
-    public  $columns                = array ();
-    public  $entities               = array ();
+    public  $columns                = array (); // Columns available
+    public  $entities               = array (); // Tables/entities visible to the current usergroup
     public  $model;
     public  $models                 = array ();
     public  $joins                  = array ();
+    public  $properties             = array (); // Columns/properties of current table visible to the current usergroup
+    public  $request;
     public  $rows                   = array ();
     public  $supportedPDODrivers    = array ();
-    public  $tables                 = array ();
-    public  $view;
+    public  $tables                 = array (); // Tables available to model
 
 
 /*
@@ -42,20 +43,17 @@ class SwefMiner extends \Swef\Bespoke\Plugin {
             if (!strlen(swefminer_uris_dashboard)) {
                 return SWEF_BOOL_TRUE;
             }
-            $this->view         = swefminer_str_dash;
             $models             = explode (swefminer_str_sep_pairs,swefminer_uris_dashboard);
         }
         else {
             if (!strlen(swefminer_uris_public)) {
                 return SWEF_BOOL_TRUE;
             }
-            $this->view         = swefminer_str_pub;
             $models             = explode (swefminer_str_sep_pairs,swefminer_uris_public);
         }
-        $request                = explode (SWEF_STR__QMARK,$this->page->requestURI)[0];
         foreach ($models as $m) {
-            $m                  = explode (swefminer_str_sep_keyval,$m);
-            if ($m[1]==$request) {
+            $m = explode (swefminer_str_sep_keyval,$m);
+            if ($m[1]==$this->page->requestPath) {
                 $this->model    = $m[0];
                 break;
             }
@@ -75,23 +73,6 @@ class SwefMiner extends \Swef\Bespoke\Plugin {
         $this->_init ($this->model);
         $this->browse ();
         return SWEF_BOOL_FALSE;
-    }
-
-
-    public function _on_pageTemplateBefore ( ) {
-        if (!$this->model) {
-            return SWEF_BOOL_TRUE;
-        }
-        if ($this->view=swefminer_str_dash) {
-            $const = swefminer_str_pfx_dm.$this->model.swefminer_str_sfx_hd_dash;
-        }
-        else {
-            $const = swefminer_str_pfx_dm.$this->model.swefminer_str_sfx_hd_pub;
-        }
-        if (defined($const)) {
-            $this->page->titleSet (constant($const));
-        }
-        return SWEF_BOOL_TRUE;
     }
 
 
@@ -129,26 +110,26 @@ class SwefMiner extends \Swef\Bespoke\Plugin {
             if (substr($c,(SWEF_INT_0-strlen(swefminer_str_sfx_dsn)))!=swefminer_str_sfx_dsn) {
                 continue;
             }
-            $model              = substr ($c,0,(SWEF_INT_0-strlen(swefminer_str_sfx_dsn)));
+            $dm                 = substr ($c,0,(SWEF_INT_0-strlen(swefminer_str_sfx_dsn)));
             $dsn                = constant (swefminer_str_pfx_dm.$c);
-            if (!defined(swefminer_str_pfx_dm.$model.swefminer_str_sfx_dbn)) {
-                $this->notify ('Data model "'.$model.'" has no database name - define '.swefminer_str_pfx_dm.$model.swefminer_str_sfx_dbn);
+            if (!defined(swefminer_str_pfx_dm.$dm.swefminer_str_sfx_dbn)) {
+                $this->notify ('Data model "'.$dm.'" has no database name - define '.swefminer_str_pfx_dm.$dm.swefminer_str_sfx_dbn);
                 return;
             }
-            $dbn                = constant (swefminer_str_pfx_dm.$model.swefminer_str_sfx_dbn);
-            if (!defined(swefminer_str_pfx_dm.$model.swefminer_str_sfx_usr)) {
-                $this->notify ('Data model "'.$model.'" has no database user - define '.swefminer_str_pfx_dm.$model.swefminer_str_sfx_usr);
+            $dbn                = constant (swefminer_str_pfx_dm.$dm.swefminer_str_sfx_dbn);
+            if (!defined(swefminer_str_pfx_dm.$dm.swefminer_str_sfx_usr)) {
+                $this->notify ('Data model "'.$dm.'" has no database user - define '.swefminer_str_pfx_dm.$dm.swefminer_str_sfx_usr);
                 return;
             }
-            if (!defined(swefminer_str_pfx_dm.$model.swefminer_str_sfx_pwd)) {
-                $this->notify ('Data model "'.$model.'" has no database password - define '.swefminer_str_pfx_dm.$model.swefminer_str_sfx_pwd);
+            if (!defined(swefminer_str_pfx_dm.$dm.swefminer_str_sfx_pwd)) {
+                $this->notify ('Data model "'.$dm.'" has no database password - define '.swefminer_str_pfx_dm.$dm.swefminer_str_sfx_pwd);
                 return;
             }
-            if (!defined(swefminer_str_pfx_dm.$model.swefminer_str_sfx_tag)) {
-                $this->notify ('Data model "'.$model.'" has no descriptive tag - define '.swefminer_str_pfx_dm.$model.swefminer_str_sfx_tag);
+            if (!defined(swefminer_str_pfx_dm.$dm.swefminer_str_sfx_tag)) {
+                $this->notify ('Data model "'.$dm.'" has no descriptive tag - define '.swefminer_str_pfx_dm.$dm.swefminer_str_sfx_tag);
                 return;
             }
-            $this->models[$model]  = constant (swefminer_str_pfx_dm.$model.swefminer_str_sfx_tag);
+            $this->models[$dm]  = constant (swefminer_str_pfx_dm.$dm.swefminer_str_sfx_tag);
         }
         if (!$dm) {
             $dm                 = $this->page->_GET(SWEF_GET_OPTION);
@@ -294,10 +275,32 @@ class SwefMiner extends \Swef\Bespoke\Plugin {
     }
 
     private function browse ( ) {
-        foreach ($this->tables as $t) {
-            if (array_key_exists(swefminer_col_ignore,$t)) {
-                if (!$t[swefminer_col_ignore]) {
-                    array_push ($this->entities,$t);
+        $valid_ug = null;
+        foreach ($this->page->swef->user->memberships as $m) {
+            if ($m[SWEF_COL_USERGROUP]==$this->page->_GET(swefminer_get_usergroup)) {
+                $valid_ug = SWEF_BOOL_TRUE;
+            }
+        }
+        if ($valid_ug) {
+            foreach ($this->tables as $t) {
+                if (!array_key_exists(swefminer_col_ignore,$t) || $t[swefminer_col_ignore]) {
+                    continue;
+                }
+                array_push ($this->entities,$t);
+                if ($this->page->_GET(swefminer_get_table)!=$t[swefminer_col_table_name]) {
+                    continue;
+                }
+                foreach ($this->columns as $c) {
+                    if (!array_key_exists(swefminer_col_ignore,$c) || $c[swefminer_col_ignore]) {
+                        continue;
+                    }
+                    if (!in_array($this->page->_GET(swefminer_get_usergroup),$c[swefminer_col_selectors])) {
+                        continue;
+                    }
+                    if ($c[swefminer_col_table_name]!=$t[swefminer_col_table_name]) {
+                        continue;
+                    }
+                    array_push ($this->properties,$c);
                 }
             }
         }
