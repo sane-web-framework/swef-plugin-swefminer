@@ -112,6 +112,7 @@ define ( 'swefminer_col_usr',               'usr'                               
 
 
 // Other tokens
+define ( 'swefminer_do_joins',              SWEF_BOOL_TRUE                                          );
 define ( 'swefminer_get_column',            'cn'                                                    );
 define ( 'swefminer_get_table',             't'                                                     );
 define ( 'swefminer_get_usergroup',         'ug'                                                    );
@@ -120,6 +121,7 @@ define ( 'swefminer_columns_lookup',        'swefminer-columns'                 
 define ( 'swefminer_concat_separator',      ';;'                                                    );
 define ( 'swefminer_formid_pfx',            'swefminer-form-'                                       );
 define ( 'swefminer_formid_sep',            '-'                                                     );
+define ( 'swefminer_is_joined',             SWEF_BOOL_TRUE                                          );
 define ( 'swefminer_pdo_driver_mysql',      'mysql'                                                 );
 define ( 'swefminer_pdo_support',           '<^[A-z0-9_]+$>'                                        );
 define ( 'swefminer_preg_table',            '<^[A-z0-9_]+$>'                                        );

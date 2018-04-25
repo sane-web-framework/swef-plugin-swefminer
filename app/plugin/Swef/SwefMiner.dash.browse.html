@@ -46,6 +46,20 @@
         <?php echo htmlspecialchars ($p[swefminer_col_heading]); ?>
       </th>
 <?php endforeach; ?>
+<?php foreach ($this->joins as $j1): ?>
+<?php   foreach ($j1->displayFields as $p): ?>
+      <th>
+        <?php echo htmlspecialchars ($p[swefminer_col_heading]); ?>
+      </th>
+<?php     foreach ($j1->joins as $j2): ?>
+<?php       foreach ($j2->displayFields as $p): ?>
+      <th>
+        <?php echo htmlspecialchars ($p[swefminer_col_heading]); ?>
+      </th>
+<?php       endforeach; ?>
+<?php     endforeach; ?>
+<?php   endforeach; ?>
+<?php endforeach; ?>
     </tr>
   </thead>
 </table>
